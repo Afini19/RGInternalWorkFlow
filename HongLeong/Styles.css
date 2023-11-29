@@ -1,0 +1,206 @@
+BODY
+{
+    MARGIN-TOP: 0pt;
+   MARGIN-LEFT: 0pt; 
+   MARGIN-RIGHT: 0pt
+}
+.Required
+{
+	font-size: 7.5pt;
+	font-family: arial;
+	color:Red;
+	font-weight: bold;
+}
+.TableSubDetailBold
+{
+	font-weight: bold;
+	font-size: 9pt;
+	font-family: arial;
+	background-color: white;
+}
+.TableSubDetail
+{
+	font-size: 10pt;
+	font-family: arial;
+	color:black;
+}
+.TableSubDetailSmaller
+{
+	font-size: 9pt;
+	font-family: arial;
+	background-color: white;
+	color:black;
+}
+.subdesc
+{
+	font-size: 8pt;
+	font-family: arial;
+	color:black;
+}
+
+.TableSubDetailBIGRED
+{
+	font-size: 14pt;
+	font-family: arial;
+	background-color: white;
+	color:RED;
+	font-weight: bold;	
+}
+
+.MenuItem
+{
+	font-size: 9pt;
+	font-family: arial;
+	color: gray;
+}
+
+.TableSubDetailSmall
+{
+	font-weight: bold;
+	font-size: 7pt;
+	font-family: arial;
+	color:Blue;
+}
+.TableSubDetailSmall2
+{
+	font-size: 7pt;
+	font-family: arial;
+	color:Black;
+}
+
+.Divider
+{
+	COLOR: gray; 
+	HEIGHT: 1px
+}
+.ErrorMsg
+{
+	font-weight: bold;
+	font-size: 14pt;
+	color: darkblue;
+	font-family: arial;
+}
+.TableHeader2
+{
+	font-weight: bold;
+	font-size: 9pt;
+	color: white;
+	font-family: arial;
+	background-color: #0099CC;
+}
+.TableHeader
+{
+	font-weight: bold;
+	font-size: 9pt;
+	color: black;
+	font-family: arial;
+	background-color: white;
+	text-decoration: underline;
+}
+.Header
+{
+	font-weight: bold;
+	font-size: 10pt;
+	color: gray;
+	font-family: arial;
+	background-color: white;
+}
+.TablesubHeader1
+{
+	font-weight: bold;
+	font-size: 8pt;
+	color: black;
+	font-family: arial;
+	background-color: powderblue;
+}
+.bigred
+{
+	font-weight: bold;
+	font-size: 16pt;
+	color: blue;
+	font-family: arial;
+	background-color: white;
+}
+
+.inputNormal
+{
+	border-right: lightgrey 1pt solid;
+	border-top: lightgrey 1pt solid;
+	font-size: 9pt;
+	border-left: lightgrey 1pt solid;
+	border-bottom: lightgrey 1pt solid;
+	font-family: arial;
+	background-color: #ffffff;
+}
+.inputbutton
+{
+	border-right: #666666 1px solid;
+	border-top: #666666 1px solid;
+	font-weight: bold;
+	font-size: 8pt;
+	border-left: #666666 1px solid;
+	color: black;
+	border-bottom: #666666 1px solid;
+	font-family: arial;
+	background-color: lightgrey;
+}
+.inputbuttoncima
+{
+	border-right: #666666 1px solid;
+	border-top: #666666 1px solid;
+	font-weight: bold;
+	font-size: 10pt;
+	border-left: #666666 1px solid;
+	color: white;
+	border-bottom: #666666 1px solid;
+	font-family: arial;
+	background-color: #006699;
+	width: 86;
+	height: 30;
+}
+.navbutton
+{
+	border-right: #666666 1px solid;
+	border-top: #666666 1px solid;
+	font-size: 9pt;
+	border-left: #666666 1px solid;
+	width: 100%;
+	color: black;
+	border-bottom: #666666 1px solid;
+	font-family: arial;
+	background-color: aliceblue;
+	text-align: left;
+}
+.navbuttonadmin
+{
+	border-right: #666666 1px solid;
+	border-top: #666666 1px solid;
+	font-weight: bold;
+	font-size: 8pt;
+	border-left: #666666 1px solid;
+	width: 100%;
+	color: black;
+	border-bottom: #666666 1px solid;
+	font-family: arial;
+	background-color: aliceblue;
+	text-align: center;
+}
+
+.navbuttonselect
+{
+	border-right: black 0.1pt solid;
+	border-top: black 0.1pt solid;
+	font-size: 9pt;
+	border-left: black 0.1pt solid;
+	width: 100%;
+	color: black;
+	border-bottom: black 0.1pt solid;
+	font-family: arial;
+	background-color: #ffffff;
+	text-align: left;
+}
+.tohide
+{
+	display: none;
+	visibility: hidden;
+}

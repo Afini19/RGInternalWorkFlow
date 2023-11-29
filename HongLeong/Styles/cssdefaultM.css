@@ -1,0 +1,166 @@
+﻿body
+{
+	margin: 0px;
+	font-family: 'Trebuchet MS' , sans-serif;
+	font-size: 62.5%;
+	left:0;
+	right:0;
+	top:0;
+}
+* {
+    -webkit-touch-callout: none;
+}
+*:focus {
+    outline: none;
+}
+.container
+{
+	width:100%;
+}
+.tapnextbar
+{
+	background-color: rgb(00, 15, 48); 
+	padding:14px; 
+	text-align:right; 
+	color:White;
+	font-size:80%;
+}
+.tapoptionsbar
+{
+	background-color: rgb(238, 46, 36); 
+	padding:9px; 
+	text-align:center; 
+	color:White;
+	font-size:80%;
+}
+
+.containerentry
+{
+	width:50%;
+}
+#middlepanel
+{
+	text-align:left;
+	width:70%;
+	float: left;
+	font-size: 100%;
+
+}
+.trhover:hover
+{
+	background: #CCFFFF;
+}
+#middlepanel100p
+{
+	text-align:left;
+	width:700px;
+	float: left;
+}
+#leftpanel
+{
+	text-align:left;
+	width:20%;
+	float: left;
+	padding-right:5px;	
+}
+#leftpanelsmall
+{
+	text-align:left;
+	width:200px;
+	float: left;
+	padding-right:5px;	
+}
+.verticalseparator
+{
+	text-align:left;
+	width:20px;
+	float: left;
+}
+#rightpanelsmall
+{
+	text-align:left;
+	width:200px;
+	float: left;
+	padding-left:5px;	
+}
+.cssdetail
+{
+    font-size:13px;
+}
+.cssdetailsmall
+{
+    font-family:arial;
+    font-size:9px;
+    text-align:left;
+}
+.csssubheader
+{
+	font-family: arial;
+	font-size: 18px;
+	text-align: left;
+}
+.csspageheader
+{
+	font-family: arial;
+	font-size: 26px;
+	text-align: left;
+	color: #000080;
+}
+.cssrequired
+{
+    font-family:arial;
+    font-size:12px;
+	color:red;
+	text-align:left;
+}
+
+.cssdivider
+{
+
+}
+.csstableheader
+{
+	padding: 5px;
+	font-family: arial;
+	font-size: 12px;
+	font-weight: bolder;
+	text-align: left;
+	background-color: #006699;
+	color: #FFFFFF;
+	height: 20px;
+}
+.appbuttonblue
+{
+	border: 1px solid #0000FF;
+	-webkit-appearance: none;
+	font-family: 'Trebuchet MS' , sans-serif;
+	background-color: #0000FF;
+	font-size: 16px;
+	color: #FFFFFF;
+	height: 40px;
+	margin:2px;
+	-moz-border-radius: 15px;
+	border-radius: 6px;
+	min-width: 150px;
+}
+.appbuttonred
+{
+	border: 1px solid #CC0000;
+	-webkit-appearance: none;
+	font-family: 'Trebuchet MS' , sans-serif;
+	background-color: #CC0000;
+	font-size: 16px;
+	color: #FFFFFF;
+	height: 40px;
+	margin: 2px;
+	-moz-border-radius: 15px;
+	border-radius: 6px;
+	min-width: 150px;
+}
+
+@media screen and (max-width:600px)
+{
+	.container{ width: 100%; }
+	.containerentry{ width: 100%; }
+
+}

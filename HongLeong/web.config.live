@@ -1,0 +1,58 @@
+<configuration>
+	<appSettings>
+
+		<add key="ConnStrAdmin" value="Provider=SQLOLEDB;Data Source=HC-EPI-APS1;Initial Catalog=CustomerPortalLive;User ID=USR_PORTAL;Password=1qazXSW@" />
+		<add key="ConnStr" value="Provider=SQLOLEDB;Data Source=HC-EPI-APS1;Initial Catalog=CustomerPortalLive;User ID=USR_PORTAL;Password=1qazXSW@" />
+		<add key="ConnStrInfo" value="Provider=SQLOLEDB;Data Source=HC-EPI-APS1;Initial Catalog=CustomerPortalLive;User ID=USR_PORTAL;Password=1qazXSW@" />
+		<add key="eventemail" value="" />
+		<add key="rooturl" value="" />
+		<add key="workshop" value="N" />
+		<add key="accomo" value="Y" />
+		<add key="payment" value="N" />
+		<add key="hardcode" value="AIFSTF" />
+		<add key="eventcode" value="ABC123" />
+		<add key="filespath" value="C:\Live Sites\Customer Portal Live\Documents\" />
+		<add key="filespathhttp" value="Documents/" />
+
+	</appSettings>
+	<system.web>
+		<pages buffer="true" enableSessionState="true" autoEventWireup="true" smartNavigation="true" validateRequest="false" enableEventValidation="false" />
+		<sessionState mode="InProc" timeout="60" cookieless="false" />
+		<customErrors mode="RemoteOnly" defaultRedirect="~/mobile/oops.aspx" />
+		<compilation debug="true" />
+		<httpModules>
+			<remove name="Session" />
+			<add name="Session" type="System.Web.SessionState.SessionStateModule" />
+		</httpModules>
+<globalization enableClientBasedCulture="true" culture="auto:en-GB" uiCulture="auto:en" />
+
+
+	</system.web>
+    <system.webServer>
+        <staticContent>
+            <mimeMap fileExtension=".apk" mimeType="application/vnd.android.package-archive" />
+        </staticContent>
+        <httpErrors errorMode="Custom" defaultResponseMode="ExecuteURL">
+            <remove statusCode="502" subStatusCode="-1" />
+            <remove statusCode="501" subStatusCode="-1" />
+            <remove statusCode="500" subStatusCode="-1" />
+            <remove statusCode="412" subStatusCode="-1" />
+            <remove statusCode="405" subStatusCode="-1" />
+            <remove statusCode="406" subStatusCode="-1" />
+            <remove statusCode="404" subStatusCode="-1" />
+            <remove statusCode="403" subStatusCode="-1" />
+            <remove statusCode="401" subStatusCode="-1" />
+            <error statusCode="401" prefixLanguageFilePath="" path="/mobile/oops.aspx" responseMode="ExecuteURL" />
+            <error statusCode="403" prefixLanguageFilePath="" path="/mobile/oops.aspx" responseMode="ExecuteURL" />
+            <error statusCode="404" prefixLanguageFilePath="" path="/mobile/oops.aspx" responseMode="ExecuteURL" />
+            <error statusCode="406" prefixLanguageFilePath="" path="/mobile/oops.aspx" responseMode="ExecuteURL" />
+            <error statusCode="405" prefixLanguageFilePath="" path="/mobile/oops.aspx" responseMode="ExecuteURL" />
+            <error statusCode="412" prefixLanguageFilePath="" path="/mobile/oops.aspx" responseMode="ExecuteURL" />
+            <error statusCode="500" prefixLanguageFilePath="" path="/mobile/oops.aspx" responseMode="ExecuteURL" />
+            <error statusCode="501" prefixLanguageFilePath="" path="/mobile/oops.aspx" responseMode="ExecuteURL" />
+            <error statusCode="502" prefixLanguageFilePath="" path="/mobile/oops.aspx" responseMode="ExecuteURL" />
+        </httpErrors>
+    </system.webServer>
+</configuration>
+
+

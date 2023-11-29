@@ -1,0 +1,161 @@
+
+<%@ Page Language="VB" AutoEventWireup="false" EnableViewState="True" CodeFile="wbuilderd.aspx.vb" Inherits="wbuilderd_class" %>
+<%@ Register Src="~/UserControls/DatePicker.ascx" TagPrefix="uc" TagName="DatePicker" %>
+<%@ Register Src="~/UserControls/ImageUploader.ascx" TagPrefix="uc" TagName="ImageUploader" %>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" >
+<head id="Head1" runat="server">
+<title></title>
+<!--#include File="../../topinitdetail.aspx"-->
+<script>
+$(function() {
+$( "input[type=submit], button" )
+.button();    
+$( "#tabs" ).tabs();       
+jQuery("#frmform").validationEngine('attach', {promptPosition : "topRight", scroll: false, showArrow : true, focusFirstField : false});
+var div1 = $( "#divnavi" ).accordion({collapsible: false,heightStyle: "content",active: 0});
+var div2 = $( "#divdetails" ).accordion({collapsible: false,heightStyle: "content",active: 0});
+   var div3 = $( "#tabs" );
+   div1.show();
+   div2.show();
+   div3.show();
+});
+</script>
+<!--#include File="../../topscriptdetail.aspx"-->
+</head>
+<body>
+<center>
+<form id="frmform" runat="server">
+<!--#include File="../../include/FormHeader1.aspx"-->
+<table width="100%">
+<tr><td align="left" width="100%">
+<table class="ui-widget-header" width="100%"><tr><td width="10px"><span class="ui-icon ui-icon-triangle-1-e"></span></td><td width="100%"><span class="ui-widget"><b><%=_formsname%></b></span></td></tr></table>				
+</td></tr>
+<tr><td valign="top" width="100%">
+<table width="100%" cellpadding="0" cellspacing="2"><tr><td width="220px" valign="top">
+<div id="divnavi" style="display:none">
+<h3>Options Menu</h3>
+<div>
+<asp:Button ID="SubmitButton" Text="Save Details" Runat="server" OnClick="savepage" style="width:160px"  /> <br />
+<asp:Button ID="BackButton" Text="Back to Designer" Runat="server" OnClick="gotoback2" style="width:160px" CausesValidation="false" OnClientClick="jQuery('#frmform').validationEngine('detach');"  /> 
+<br /><br />
+<b>Messages:</b><br />
+<asp:Label ID="lblMessage" runat="server" class="cssrequired"></asp:Label>
+<br /><br /><br />
+</div>
+</div>
+<div id="divdetails" style="text-align:left" style="display:none">
+<h3>Additional Details</h3>
+<div>
+<b>Created By:</b><br />
+<asp:Literal ID="litcreateby" runat="server"></asp:Literal>
+<br /><br />
+<b>Created On:</b><br />
+<asp:Literal ID="litcreateon" runat="server"></asp:Literal>
+<br /><br />
+<b>Last Update By: </b><br />
+<asp:Literal ID="litupdateby" runat="server"></asp:Literal>
+<br /><br />
+<b>Last Update On: </b><br />
+<asp:Literal ID="litupdateon" runat="server"></asp:Literal>
+<br /><br />
+</div>
+</div>
+</td>
+<td  valign="top" width="100%">
+<div id="tabs" style="display:none">  
+<ul>   
+<li><a href="#tabs-1"><%=_formsname %></a></li>    
+</ul>  
+<div id="tabs-1">
+
+
+<table width="70%">
+<tr><td class="csssubheader" colspan="2">Please fill in details below</td></tr>
+<tr><td class="csssubheader" colspan="2"><hr width="100%" class="cssdivider" /></td></tr>
+<tr><td class="cssdetail" valign="top" align="left" >Level Name&nbsp;</td><td colspan="1" class="cssdetail"  valign="top" align="left"><asp:TextBox  runat="server" ID="wui_name" MaxLength="100" class="validate[required]" /></td></tr>
+<tr><td class="cssdetail" valign="top" align="left" >Sequence No.&nbsp;<font class="cssrequired">*</font></td><td colspan="1" class="cssdetail"  valign="top" align="left"><asp:TextBox  runat="server" ID="wui_no" class="validate[required,custom[integer]]" Width="20%" /></td></tr>
+<tr><td class="cssdetail" valign="top" align="left"  width="40%" >Allow Attachment&nbsp;</td><td colspan="1" class="cssdetail"  valign="top" align="left"><asp:CheckBox runat="server" ID="wui_allowattach" />&nbsp;Level 1 automatically allowed attachment</td></tr>
+
+<tr><td class="cssdetail" valign="top" align="left" colspan="2" ><hr class="cssdivider" width="100%" /></td></tr>
+<tr><td class="cssdetail" valign="top" align="left"  width="40%" >Enable Approve Action&nbsp;</td><td colspan="1" class="cssdetail"  valign="top" align="left"><asp:CheckBox runat="server" ID="wui_approve" /></td></tr>
+<tr><td class="cssdetail" valign="top" align="left" >Action Name&nbsp;</td><td colspan="1" class="cssdetail"  valign="top" align="left"><asp:TextBox  runat="server" ID="wui_approvename" MaxLength="20" />(Empty = "Approve")</td></tr>
+<tr><td class="cssdetail" valign="top" align="left" >On Approve &nbsp;<font class="cssrequired">*</font></td><td colspan="1" class="cssdetail"  valign="top" align="left"><asp:DropDownList ID="wui_approvestep" runat="server"></asp:dropdownlist></td></tr>
+
+<tr><td class="cssdetail" valign="top" align="left" colspan="1" >&nbsp;</td>
+    <td class="cssdetail" valign="top" align="left" colspan="1" ><hr class="cssdivider" width="100%" /></td>
+</tr>
+<tr><td class="cssdetail" valign="top" align="left"  width="40%" >Enable Approval Limit&nbsp;</td><td colspan="1" class="cssdetail"  valign="top" align="left"><asp:CheckBox runat="server" ID="wui_approveval" /></td></tr>
+<tr><td class="cssdetail" valign="top" align="left" >Approval Limit &nbsp;<font class="cssrequired"></font></td><td colspan="1" class="cssdetail"  valign="top" align="left">
+<asp:TextBox  runat="server" ID="wui_approvevalamt" MaxLength="20" class="validate[custom[number]]" />
+</td></tr>
+<tr><td class="cssdetail" valign="top" align="left"  width="40%" >End Workflow by Limit&nbsp;</td><td colspan="1" class="cssdetail"  valign="top" align="left"><asp:CheckBox runat="server" ID="wui_approvalvalend" /></td></tr>
+
+
+
+
+<tr><td class="cssdetail" valign="top" align="left" colspan="2" ><hr class="cssdivider" width="100%" /></td></tr>
+<tr><td class="cssdetail" valign="top" align="left"  width="40%" >Enable Reject Action&nbsp;</td><td colspan="1" class="cssdetail"  valign="top" align="left"><asp:CheckBox runat="server" ID="wui_reject" /></td></tr>
+<tr><td class="cssdetail" valign="top" align="left" >Action Name&nbsp;</td><td colspan="1" class="cssdetail"  valign="top" align="left"><asp:TextBox  runat="server" ID="wui_rejectname" MaxLength="20" />(Empty = "Reject")</td></tr>
+<tr><td class="cssdetail" valign="top" align="left" >On Reject &nbsp;<font class="cssrequired">*</font></td><td colspan="1" class="cssdetail"  valign="top" align="left"><asp:DropDownList ID="wui_rejectstep" runat="server"></asp:dropdownlist></td></tr>
+
+<tr><td class="cssdetail" valign="top" align="left" colspan="2" ><hr class="cssdivider" width="100%" /></td></tr>
+<tr><td class="cssdetail" valign="top" align="left"  width="40%" >Enable Cancel Action&nbsp;</td><td colspan="1" class="cssdetail"  valign="top" align="left"><asp:CheckBox runat="server" ID="wui_cancel" /></td></tr>
+<tr><td class="cssdetail" valign="top" align="left" >Action Name&nbsp;</td><td colspan="1" class="cssdetail"  valign="top" align="left"><asp:TextBox  runat="server" ID="wui_cancelname" MaxLength="20" />(Empty = "Cancel")</td></tr>
+<tr><td class="cssdetail" valign="top" align="left" >On Cancel &nbsp;<font class="cssrequired">*</font></td><td colspan="1" class="cssdetail"  valign="top" align="left"><asp:DropDownList ID="wui_cancelstep" runat="server" ></asp:dropdownlist></td></tr>
+<tr><td class="csssubheader" colspan="2"><hr width="100%" class="cssdivider" /></td></tr>
+<tr><td class="csssubheader" colspan="2">Approval Groups</td></tr>
+<tr><td colspan="2">
+
+<table  width="100%"  style="height:80%; background-color:Gainsboro;" cellpadding="2" cellspacing="1">
+<tr class="ui-widget-header" style="height:25px">
+<td  class="cssdetail"><b>No.</b></td>
+<td class="cssdetail">Approval Group</td>
+<td class="cssdetail">Action Rights</td>
+<td class="cssdetail">On Approve: Notify</td>
+<td class="cssdetail">On Approve: Email To</td>
+<td class="cssdetail">On Reject: Email To</td>
+<td class="cssdetail">On Cancel: Email To</td>
+</tr>
+<asp:Repeater ID="rep" runat="server"  >
+<ItemTemplate>
+<tr id="trRow" class="ui-widget-content" runat="server">
+<td align="center" class="cssdetail">
+<asp:Literal ID="litNo" runat="server" Text='<%# Container.ItemIndex + 1 %>'></asp:Literal>
+<asp:HiddenField ID="txtid" runat="server" Value='<%#DataBinder.Eval(Container.DataItem, "wo_id")%>' />
+<asp:HiddenField ID="txtiid" runat="server" Value='<%#DataBinder.Eval(Container.DataItem, "wo_id")%>' />
+
+</td>
+<td class="cssdetail"><asp:Literal ID="litname" runat="server" Text='<%#DataBinder.Eval(Container.DataItem, "wo_name")%>'></asp:Literal></td>
+<td class="cssdetail"><asp:CheckBox id="chkfull" runat="server" ToolTip='<%#DataBinder.Eval(Container.DataItem, "wo_id")%>' /></td>
+<td class="cssdetail"><asp:CheckBox id="chkonnotify" runat="server" ToolTip='<%#DataBinder.Eval(Container.DataItem, "wo_id")%>' /></td>
+
+<td class="cssdetail"><asp:CheckBox id="chkonapprove" runat="server" ToolTip='<%#DataBinder.Eval(Container.DataItem, "wo_id")%>' /></td>
+<td class="cssdetail"><asp:CheckBox id="chkonreject" runat="server" ToolTip='<%#DataBinder.Eval(Container.DataItem, "wo_id")%>' /></td>
+<td class="cssdetail"><asp:CheckBox id="chkoncancel" runat="server" ToolTip='<%#DataBinder.Eval(Container.DataItem, "wo_id")%>' /></td>
+</tr>
+</ItemTemplate>
+</asp:Repeater>
+</table>
+
+
+
+</td></tr>
+</table>
+
+
+
+</div> 
+</div>
+</td></tr></table>
+<br /><br />
+<input type="hidden" runat="server" id="rid" name="rid">
+<input type="hidden" runat="server" id="bid" name="bid">
+<input type="hidden" runat="server" id="pg" name="pg">
+<input type="hidden" runat="server" id="ucode" name="ucode">
+</td></tr></table>
+<!--#include File="../../include/FormFooter1.aspx"-->
+</form>
+</center>
+</body>
+</html>

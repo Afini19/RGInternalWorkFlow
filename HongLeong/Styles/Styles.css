@@ -1,0 +1,272 @@
+.labelBig
+{
+    font-weight: normal;
+    font-size: 13px;
+    font-family: arial;
+}
+.label
+{
+    font-weight: normal;
+    font-size: 11px;
+    font-family: arial;
+}
+.labelwhite
+{
+    font-weight: normal;
+    font-size: 11px;
+    font-family: arial;
+    color:White;
+}
+.labelred
+{
+    font-weight: normal;
+    font-size: 11px;
+    font-family: arial;
+    color:red;
+}
+.labelgray
+{
+    font-weight: normal;
+    font-size: 11px;
+    font-family: arial;
+    color:Gray;
+    text-decoration:none;
+}
+.labelblue
+{
+    font-weight: normal;
+    font-size: 11px;
+    font-family: arial;
+    color:Blue;
+    text-decoration:none;
+}
+.headertitle
+{
+    font-weight: bold;
+    font-size: 16px;
+    font-family: 'Arial Black';
+    color: White;
+}
+.alerttitle
+{
+    font-weight: bold;
+    font-size: 11px;
+    font-family: 'Arial';
+    color: White;
+}
+.textbox
+{
+    font-weight: normal;
+    font-size: 11px;
+    font-family: arial;
+    border-right: #999999 1px solid;
+    border-top: #999999 1px solid;
+    border-left: #999999 1px solid;
+    border-bottom: #999999 1px solid;
+    padding-right: 2px;
+    padding-left: 2px;
+    padding-bottom: 2px;
+    padding-top: 2px;
+}
+.textboxlookup
+{
+    font-weight: normal;
+    font-size: 11px;
+    font-family: arial;
+    border-right: #999999 1px solid;
+    border-top: #999999 1px solid;
+    border-left: #999999 1px solid;
+    border-bottom: #999999 1px solid;
+    padding-right: 2px;
+    padding-left: 2px;
+    padding-bottom: 2px;
+    padding-top: 2px;
+    background-color: #ffffcc;
+}
+.textboxoff
+{
+    font-weight: normal;
+    font-size: 11px;
+    font-family: arial;
+    border-right: #999999 1px solid;
+    border-top: #999999 1px solid;
+    border-left: #999999 1px solid;
+    border-bottom: #999999 1px solid;
+    padding-right: 2px;
+    padding-left: 2px;
+    padding-bottom: 2px;
+    padding-top: 2px;
+    background-color: lightcyan;
+}
+.subheaderfont
+{
+    font-family: arial;
+    font-weight: bold;
+    font-size: 11px;
+    color: white;
+}
+.subheader
+{
+    font-family: arial;
+    font-weight: bold;
+    font-size: 11px;
+    color: black;
+    border-right: dimgray 1px solid;
+    border-top: dimgray 1px solid;
+    border-left: dimgray 1px solid;
+    border-bottom: dimgray 1px solid;
+    background-color: #003366;
+}
+
+.areaheader
+{
+    border-right: darkgray 1px solid;
+    border-top: darkgray 1px solid;
+    font-weight: bold;
+    font-size: 11px;
+    border-left: darkgray 1px solid;
+    color: black;
+    border-bottom: darkgray 1px solid;
+    font-family: arial;
+    background-color: lightgrey;
+}
+.gridheader
+{
+    font-weight: bolder;
+    font-size: 11px;
+    font-family: arial;
+    border-right: lightgrey 1px solid;
+    border-top: lightgrey 1px solid;
+    border-left: lightgrey 1px solid;
+    border-bottom: lightgrey 1px solid;
+    padding-right: 2px;
+    padding-left: 2px;
+    padding-bottom: 2px;
+    padding-top: 2px;
+    background-color: lightcyan;
+}
+.griddetail
+{
+    font-weight: normal;
+    font-size: 11px;
+    font-family: arial;
+    background-color: ghostwhite;
+}
+.printdetail
+{
+    font-weight: normal;
+    font-size: 11px;
+    font-family: arial;
+    background-color: white;
+}
+.printdetailblack
+{
+    font-weight: normal;
+    font-size: 11px;
+    font-family: arial;
+	color:white;
+    background-color: black;
+}
+.griddetailwithline
+{
+    font-weight: normal;
+    font-size: 11px;
+    font-family: arial;
+    background-color: ghostwhite;
+    border-bottom: #999999 1px dotted;
+}
+.griddetailstrike
+{
+    font-weight: normal;
+    font-size: 11px;
+    font-family: arial;
+    background-color: ghostwhite;
+    color: red;
+    text-decoration: line-through;
+}
+
+.gridsubdetail
+{
+    font-weight: normal;
+    font-size: 10px;
+    font-family: arial;
+    background-color: white;
+}
+.button
+{
+    border-right: #999999 1px solid;
+    border-top: #999999 1px solid;
+    border-left: #999999 1px solid;
+    border-bottom: #999999 1px solid;
+    font-family: arial;
+    font-size: 11px;
+    background-color: gainsboro;
+}
+.listbox
+{
+    font-weight: normal;
+    font-size: 11px;
+    font-family: arial;
+    border-right: #999999 1px solid;
+    border-top: #999999 1px solid;
+    border-left: #999999 1px solid;
+    border-bottom: #999999 1px solid;
+    padding-right: 2px;
+    padding-left: 2px;
+    padding-bottom: 2px;
+    padding-top: 2px;
+}
+BODY
+{
+    margin-top: 0px;
+    background-color: #f8f3f7;
+}
+.forumheader
+{
+    font-weight: bold;
+    font-size: 12px;
+    font-family: Arial;
+    color: black;
+    border-right: darkgray 1px solid;
+    border-top: darkgray 1px solid;
+    border-left: darkgray 1px solid;
+    border-bottom: darkgray 1px solid;
+    background-color: whitesmoke;
+}
+.forumdetail
+{
+    font-weight: normal;
+    font-size: 11px;
+    font-family: arial;
+    background-color: whitesmoke;
+}
+.forumdesc
+{
+    font-weight: normal;
+    font-size: 11px;
+    font-family: arial;
+    color: gray;
+}
+.forumname
+{
+    font-weight: bold;
+    font-size: 11px;
+    font-family: arial;
+    color: blue;
+    text-decoration:none;
+}
+.forumgroup
+{
+    font-weight: bold;
+    font-size: 12px;
+    font-family: Arial;
+    color: darkblue;
+
+}
+.forumbg
+{
+    font-weight: normal;
+    font-size: 11px;
+    font-family: arial;
+    background-color: whitesmoke;
+}
