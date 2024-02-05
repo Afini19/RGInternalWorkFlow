@@ -49,8 +49,8 @@ Exit Function
 End If
 
 If WebLib.CodeExists(ssf_code.text, "ssf_code", TableName, IDField, rid.value, IDPField, bid.value, AppIDField, MerchantIDField, FilterField) = True Then
-lblmessage.text = "This Function code Already Exits"
-Return False
+            lblMessage.Text = "This Function code Already Exist"
+            Return False
 Exit Function
 End If
 

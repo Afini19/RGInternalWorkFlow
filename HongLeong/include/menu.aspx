@@ -91,7 +91,7 @@
 
     <nav class="navbar navbar-expand-lg navbar-light bg-bar bg-white" style="font-weight: 500px; font-size: 0.9rem; background-repeat: repeat-x; left: 0; top: 0; border-bottom: 8px solid; border-bottom-color:gainsboro;">
         <a class="navbar-brand pb-2 m-2" href="<%=WebLib.ClientURL("home.aspx")%>">
-            <img src="<%=WebLib.ClientURL("images/humelogo2.jpg")%>" width="220" height="50" class="d-inline-block align-top" alt="Logo"></a>
+            <img src="<%=WebLib.ClientURL("images/rgtech.png")%>" width="220" height="50" class="d-inline-block align-top" alt="Logo" ></a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
@@ -180,7 +180,7 @@
                                 <li><a class="dropdown-item" href="<%=weblib.clienturl("modules/custom/cusccr_listC.aspx")%>">Customer Complaint</a></li>
                                 <%end if%>
                                 <% if WebLib.hasmodrights("zcustom_ccr", "WORKFLOW", "PQ000") = True %>
-                                <li><a class="dropdown-item" href="<%=weblib.clienturl("modules/custom/cusccr_list.aspx")%>">Customer Complaint - Product Quality</a></li>
+                                <li><a class="dropdown-item" href="<%=WebLib.ClientURL("modules/custom/cusccr_listC.aspx")%>">Customer Complaint - Product Quality</a></li>
                                 <%end if%>
                                 <% if WebLib.hasmodrights("zcustom_ccrp", "WORKFLOW", "PK000") = True %>
                                 <li><a class="dropdown-item" href="<%=WebLib.ClientURL("modules/custom/cusccr_listP.aspx")%>">Customer Complaint - Packaging</a></li>
@@ -194,6 +194,35 @@
                             </ul>
                         </li>
                         <%end if%>
+
+                        <% if WebLib.hasmodrights("zcustom_crC", "WORKFLOW", "AA000") = True Or WebLib.hasmodrights("zcustom_crI", "WORKFLOW", "BB000") = True Or WebLib.hasmodrights("zcustom_crS", "WORKFLOW", "CC000") = True Then%>
+                        <li class="dropdown-submenu"><a class="dropdown-item dropdown-toggle" href="#">Change Request</a>
+                            <ul class="dropdown-menu">
+                                <% if WebLib.hasmodrights("zcustom_crC", "WORKFLOW", "AA000") = True %>
+                                <li><a class="dropdown-item" href="<%=WebLib.ClientURL("modules/custom/crC_list.aspx")%>">Customer CR</a></li>
+                                <%end if%>
+                                <% if WebLib.hasmodrights("zcustom_crI", "WORKFLOW", "BB000") = True %>
+                                <li><a class="dropdown-item" href="<%=WebLib.ClientURL("modules/custom/crI_list.aspx")%>">Internal CR</a></li>
+                                <%end if%>
+                                <% if WebLib.hasmodrights("zcustom_crS", "WORKFLOW", "CC000") = True %>
+                                <li><a class="dropdown-item" href="<%=WebLib.ClientURL("modules/custom/crS_list.aspx")%>">Support CR</a></li>
+                                <%end if%>
+                            </ul>
+                        </li>
+                        <%end If%>
+
+                        <% if WebLib.hasmodrights("zcustom_stI", "WORKFLOW", "SI000") = True Or WebLib.hasmodrights("zcustom_stS", "WORKFLOW", "SS000") = True Then%>
+                        <li class="dropdown-submenu"><a class="dropdown-item dropdown-toggle" href="#">Support Ticket</a>
+                            <ul class="dropdown-menu">
+                                <% if WebLib.hasmodrights("zcustom_stI", "WORKFLOW", "SI000") = True %>
+                                <li><a class="dropdown-item" href="<%=WebLib.ClientURL("modules/custom/stI_list.aspx")%>">Internal Issue</a></li>
+                                <%end if%>
+                                <% if WebLib.hasmodrights("zcustom_stS", "WORKFLOW", "SS000") = True %>
+                                <li><a class="dropdown-item" href="<%=WebLib.ClientURL("modules/custom/stS_list.aspx")%>">Support Issue</a></li> 
+                                <%end if%>
+                            </ul>
+                        </li>
+                        <%end If%>
 						
                         <% if Weblib.hasmodrights("zcustom_tempcl", "WORKFLOW", "TC000") = true Or Weblib.hasmodrights("zcustom_clexceed", "WORKFLOW", "CL000") = true Or _
                               Weblib.hasmodrights("zcustom_unblockacct", "WORKFLOW", "UA000") = true Or Weblib.hasmodrights("zcustom_ceval", "WORKFLOW", "CV000") = true Or _
@@ -318,7 +347,7 @@
                 <% if WebLib.hasmodrights("salesqouta", "SALES", "SQ000") = True Or WebLib.hasmodrights("salestarget", "SALES", "SG000") = True Or
                       WebLib.hasmodrights("salesactcust", "SALES", "SA000") = True Or WebLib.hasmodrights("salescustlogin", "SALES", "SM000") = True Or
                       WebLib.hasmodrights("salespref", "SALES", "SP000") = True Or WebLib.hasmodrights("salesmaxqty", "SALES", "SX000") = True Or
-                      WebLib.hasmodrights("sales", "SALES", "SA000") = True Or (WebLib.hasmodrights("npscore", "GENERAL", "NP000") = True) Then%>
+                      WebLib.hasmodrights("sales", "SALES", "SA000") = True Or (WebLib.hasmodrights("npscore", "GENERAL", "NP000") = True) Or WebLib.hasmodrights("salescustmaintenance", "SALES", "SE000") = True Then%>
 
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" id="navbarDropdown2" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -342,12 +371,17 @@
                         </li>
                         <%end if %>
 						
-                        <% if Weblib.hasmodrights("salesactcust", "SALES", "SA000") = true or Weblib.hasmodrights("salescustlogin", "SALES", "SM000") = true then%>
+                        <% if Weblib.hasmodrights("salesactcust", "SALES", "SA000") = True Or WebLib.hasmodrights("salescustlogin", "SALES", "SM000") = True Or WebLib.hasmodrights("salescustmaintenance", "SALES", "SE000") = True Then%>
                         <li class="dropdown-submenu"><a class="dropdown-item dropdown-toggle" href="#">Setup for a Customer</a>
                             <ul class="dropdown-menu">
                                 <li>
-                                    <% if Weblib.hasmodrights("salesactcust", "SALES", "SA000") = true %>
+                                    <% if WebLib.hasmodrights("salesactcust", "SALES", "SA000") = True %>
                                     <a class="dropdown-item" href="<%=weblib.clienturl("sysmerchantlist.aspx")%>">Activate Customer</a>
+                                    <%end if %>
+                                </li>
+                                <li>
+                                    <% if WebLib.hasmodrights("salescustmaintenance", "SALES", "SE000") = True %>
+                                    <a class="dropdown-item" href="<%=WebLib.ClientURL("custlist.aspx")%>">Customer Maintenance</a>
                                     <%end if %>
                                 </li>
                                 <li>
@@ -473,6 +507,8 @@
                                 <li>
                                     <% if Weblib.hasmodrights("mstrcategory", "GENERAL", "CT000") = True %>
                                     <a class="dropdown-item" href="<%=WebLib.ClientURL("mstrcategorylist.aspx")%>">FieldForce Category</a>
+                                    <a class="dropdown-item" href="<%=WebLib.ClientURL("deptlist.aspx")%>">Department</a>
+                                    <a class="dropdown-item" href="<%=WebLib.ClientURL("codemstrlist.aspx")%>">Codemaster</a>
                                     <%end if %>
                                 </li>
                             </ul>
@@ -523,7 +559,8 @@
                         <span><%=WebLib.LoginUserName %></span></a>
                     <div class="dropdown-menu navbar-font" aria-labelledby="navbarDropdown5" style="font-size: 0.75rem;">
                         <a class="dropdown-item" href="<%=WebLib.ClientURL("secuserinfoedit.aspx")%>">Profile</a>
-                        <a class="dropdown-item" href="<%=WebLib.ClientURL("login.aspx?ga=S")%>">Log Out</a>
+                        <%--<a class="dropdown-item" href="<%=WebLib.ClientURL("login.aspx?ga=S")%>">Log Out</a>--%>
+                        <a class="dropdown-item" href="<%=WebLib.ClientURL("loginstaff.aspx?ga=S")%>">Log Out</a>
                     </div>
                 </li>
             </ul>

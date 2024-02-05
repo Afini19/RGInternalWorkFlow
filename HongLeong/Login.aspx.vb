@@ -30,7 +30,8 @@ Partial Public Class login_class
             Dim ieversion As String = Request.Browser.Type.ToLower.Replace("internetexplorer", "")
             If Request.Browser.MajorVersion < 11 Then 'CInt(ieversion) < 11 OrElse
                 Dim str As String = System.Net.WebUtility.UrlEncode("We recommend downloading the newest version of your preferred browser for the best experience. Our Net Promoter Score Survey & Portal supports the following browsers: <br/><ol><li>Chrome 18 and later</li><li>Firefox 24 and later</li><li>Safari 7 or later</li><li>Microsoft Edge</li><li>Internet Explorer 11</li></ol>")
-                Response.Redirect("postpage.aspx?NextPage=message1.aspx?ga=B&ba=" & "login.aspx")
+                'Response.Redirect("postpage.aspx?NextPage=message1.aspx?ga=B&ba=" & "login.aspx")
+                Response.Redirect("postpage.aspx?NextPage=message1.aspx?ga=B&ba=" & "loginstaff.aspx")
             End If
         End If
 
@@ -63,7 +64,7 @@ Partial Public Class login_class
         Dim dr As DataRow
         Dim loginStatus As String = ""
         Dim ADconnection As String = ""
-        WebLib.LoginUserCompanySelected = "HCSB"
+        WebLib.LoginUserCompanySelected = "RGTECH"
 
         Try
             cmd.CommandText = "Select usr_email,usr_sysadmin,usr_code,usr_profile,usr_branch,usr_name,usr_firstscreen,usr_merchantid,isnull(usr_custbranchid,'') as usr_custbranchid,isnull(usr_custbranchnum,0) as usr_custbranchnum, usr_matrixlevel, usr_region, usr_isad, usr_password, usr_state from secuserinfo " &
@@ -128,7 +129,7 @@ Partial Public Class login_class
                 lblMessage.Text = "Login Failed"
             Else
                 'Call WebLib.GetAppsByMerchantID(WebLib.MerchantID)
-                'Call WebLib.GetRightsByProfileID(WebLib.ProfileID)
+                Call WebLib.GetRightsByProfileID(WebLib.ProfileID)
 
                 'WebStats.trackstats("L", loginStatus, ADconnection)
 
@@ -181,7 +182,7 @@ Partial Public Class login_class
                 WebLib.LoginUserState = ""
                 WebLib.isAD = False
                 WebLib.CustUnderLoginUserMatrixLevel = ""
-                WebLib.LoginUserCompanySelected = "HCSB"
+                WebLib.LoginUserCompanySelected = "RGTECH"
 
                 Exit For
             Next
@@ -253,7 +254,7 @@ Partial Public Class login_class
             cmd.Dispose()
             cn.Dispose()
         Catch ex As Exception
-            lblMessage.Text = ex.Message
+            'lblMessage.Text = ex.Message
         End Try
     End Function
 

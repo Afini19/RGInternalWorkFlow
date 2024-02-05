@@ -30,7 +30,7 @@ Partial Public Class wlist_list_class
         ViewRights = "" '"SM0004"
         FullRights = ""
         NmSpace = "forms"
-        pFieldNames = " wf_id,wf_name,wf_code,wf_classification,wfl_wflowid "
+        pFieldNames = " wf_id,wf_name,wf_code,wf_classification,wfl_wflowid,wf_filter "
         pJoinFields = " left join workflowlink on " & TableName & ".wf_id=workflowlink.wfl_wflowid "
         btnback.Visible = False
         Call InitLoad()

@@ -1,0 +1,18 @@
+[
+	{
+		"crno": "CR1500133",
+		"customer": "SWL Aeon Kuching",
+		"initiator": "AEON Store Kuching",
+		"contactno": "01234567898",
+		"createdt": "10/12/2022",
+		"crtype": "Customer CR",
+		"requestTitle": "New Request for POS System",
+		"description": "TSO012405\nTSO012261\nTSO012180\nTMO008006",
+		"devmandays": 2,
+		"testingmandays": 3,
+		"priority": "High",
+		"chargeable": "Yes",
+		"submitteddt": "10/12/2022"
+	}
+
+]

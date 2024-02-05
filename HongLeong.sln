@@ -1,15 +1,15 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.28307.1231
+# Visual Studio Version 17
+VisualStudioVersion = 17.7.34202.233
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "HongLeong", "HongLeong", "{891B6D78-D34C-4887-89F2-C40C7DCD1E3C}"
+Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "HongLeong", "HongLeong\", "{891B6D78-D34C-4887-89F2-C40C7DCD1E3C}"
 	ProjectSection(WebsiteProperties) = preProject
 		SccProjectName = "SAK"
 		SccAuxPath = "SAK"
 		SccLocalPath = "SAK"
 		SccProvider = "SAK"
-		TargetFrameworkMoniker = ".NETFramework,Version%3Dv4.5"
+		TargetFrameworkMoniker = ".NETFramework,Version%3Dv4.6"
 		Debug.AspNetCompiler.VirtualPath = "/localhost_25070"
 		Debug.AspNetCompiler.PhysicalPath = "HongLeong\"
 		Debug.AspNetCompiler.TargetPath = "PrecompiledWeb\localhost_25070\"
@@ -42,16 +42,5 @@ Global
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {83A8B28B-9F99-4F8F-8376-F0C4400C12E7}
-	EndGlobalSection
-	GlobalSection(TeamFoundationVersionControl) = preSolution
-		SccNumberOfProjects = 2
-		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
-		SccTeamFoundationServer = https://dev.azure.com/rgtech-portal
-		SccLocalPath0 = .
-		SccWebProject1 = true
-		SccProjectUniqueName1 = HongLeong
-		SccProjectName1 = HongLeong
-		SccLocalPath1 = HongLeong
-		SccProjectEnlistmentChoice1 = 2
 	EndGlobalSection
 EndGlobal

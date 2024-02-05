@@ -202,5 +202,19 @@ Partial Public Class samples_list_class
 
     End Sub
 
+    Public Sub LogtheAudit(ByVal theMessage As String)
+        Dim strFile As String = "c:\officeonelog\ErrorLog3.txt"
+        Dim fileExists As Boolean = File.Exists(strFile)
+
+        Try
+
+            Using sw As New StreamWriter(File.Open(strFile, FileMode.Append))
+                sw.WriteLine(DateTime.Now & " - " & theMessage)
+            End Using
+        Catch ex As Exception
+
+        End Try
+    End Sub
+
 End Class
 
