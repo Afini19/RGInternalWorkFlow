@@ -44,7 +44,7 @@ Partial Public Class crC_class
 
         If Page.IsPostBack = False Then
             lblcrno.Text = "<b>Auto Generated</b>"
-            'cus_date.Textdmy = WebLib.formatthedate(DateTime.Today)
+
             cus_refno.Text = Request("rc") & "" 'notsure
 
             'WebLib.SetListItems(cus_typeofsample, f_type)
@@ -99,15 +99,15 @@ Partial Public Class crC_class
 
             Call WebLib.setListItemsTable(cus_tags, "cm_description", "cm_description", "codemaster", "cm_id", "", "", "", " cm_fieldname = 'tags' ")
 
-            'LoadCategories(cus_department.SelectedItem.Value)
+            cus_category.Items.Insert(0, New ListItem("Please Select", ""))
 
-            'LoadModules(cus_category.SelectedItem.Value)
+            cus_module.Items.Insert(0, New ListItem("Please Select", ""))
+
 
         End If
 
         createdt.Value = DateTime.Now
         cus_date.Textdmy = WebLib.formatthedate(DateTime.Today)
-        'cus_devduedate.Textdmy = WebLib.formatthedate(DateTime.Today)
         cus_refno.ReadOnly = True 'notsure
 
         Call InitLoad()
@@ -133,8 +133,6 @@ Partial Public Class crC_class
 
         loadpr()
 
-
-
     End Sub
 
     Private Sub enabledisablesubmitbutton()
@@ -146,21 +144,10 @@ Partial Public Class crC_class
     Private Function ValidateForm()
         lblMessage.Text = ""
 
-        'If cus_duration.enabled = True Then
-        '    If (cus_duration.textdmy) <> "" Then
-        '        If cus_duration.datevalue = New DateTime(1991, 1, 1) Then
-        '            lblMessage.Text = WebLib.getAlertMessageStyle("Date Sample Needed at Site")
-        '            Return False
-        '        End If
-        '    End If
-        'End If
-
         If cus_chargeable.Enabled = True And wfb_bar.wlevelAPget().ToString.Trim = "4" Then
             If cus_chargeable.SelectedIndex < 0 Then
                 lblMessage.Text = WebLib.getAlertMessageStyle("Please Indicate CR is Chargeable or not")
                 Return False
-            Else
-
             End If
         End If
 
@@ -214,12 +201,6 @@ Partial Public Class crC_class
             End If
         End If
 
-        If cus_category.SelectedIndex < 0 Then
-            LogtheAudit(cus_category.SelectedIndex)
-            lblMessage.Text = WebLib.getAlertMessageStyle("Please Indicate Category")
-            Return False
-        End If
-
         Return True
     End Function
 
@@ -270,24 +251,29 @@ Partial Public Class crC_class
                 cus_title.Text = dr("cus_title") & ""
                 cus_requestTitle.Text = dr("cus_requestTitle") & ""
                 cus_date.Textdmy = dr("cus_createdt").ToString.Trim
-                cus_department.Text = dr("cus_department") & ""
-                cus_category.Text = dr("cus_category") & ""
-                cus_module.Text = dr("cus_module") & ""
+                cus_department.SelectedValue = dr("cus_department") & ""
                 cus_crtype.Text = dr("cus_crtype") & ""
                 cus_customer.SelectedValue = dr("cus_customer") & ""
                 cus_initiator.Text = dr("cus_initiator") & ""
                 cus_contactno.Text = dr("cus_contactno") & ""
                 cus_priority.SelectedValue = dr("cus_priority") & ""
 
+                LoadCategories(cus_department.SelectedValue)
+                cus_category.SelectedValue = dr("cus_category") & ""
+                cus_category_hidden.Value = cus_category.SelectedValue
+
+                LoadModules(cus_category.SelectedValue)
+                cus_module.SelectedValue = dr("cus_module") & ""
+                cus_module_hidden.Value = cus_module.SelectedValue
+
                 'templi = cus_department.Items.FindByValue(dr("de_name") & "")
                 'cus_department.SelectedIndex = cus_department.Items.IndexOf(templi)
 
-                'templi = cus_category.Items.FindByValue(dr("cus_category") & "")
+                'templi1 = backend.GetCategoryList(cus_department.SelectedValue)
                 'cus_category.SelectedIndex = cus_category.Items.IndexOf(templi)
 
                 'templi = cus_module.Items.FindByValue(dr("mod_description") & "")
                 'cus_module.SelectedIndex = cus_module.Items.IndexOf(templi)
-
 
                 'cus_devmandays.Text = dr("cus_devmandays") & ""
                 'cus_testingmandays.Text = dr("cus_testingmandays") & ""
@@ -407,19 +393,6 @@ Partial Public Class crC_class
             lcus_department = cus_department.SelectedItem.Value
         End If
 
-        Dim lcus_category As String = ""
-        If cus_category.SelectedIndex < 0 Then
-            lcus_category = ""
-        Else
-            lcus_category = cus_category.SelectedValue
-        End If
-
-        Dim lcus_module As String = ""
-        If cus_module.SelectedIndex < 0 Then
-            lcus_module = ""
-        Else
-            lcus_module = cus_module.SelectedItem.Value
-        End If
 
         Try
             If rid.Value = "" Then
@@ -458,9 +431,9 @@ Partial Public Class crC_class
                 insertfields = insertfields & ",cus_department"
                 insertvalues = insertvalues & ",'" & lcus_department & "'"
                 insertfields = insertfields & ",cus_category"
-                insertvalues = insertvalues & ",'" & lcus_category & "'"
+                insertvalues = insertvalues & ",'" & cus_category_hidden.Value & "'"
                 insertfields = insertfields & ",cus_module"
-                insertvalues = insertvalues & ",'" & lcus_module & "'"
+                insertvalues = insertvalues & ",'" & cus_module_hidden.Value & "'"
                 insertfields = insertfields & ",cus_crtype"
                 insertvalues = insertvalues & ",'" & cus_crtype.Text.Replace("'", "''") & "'"
                 insertfields = insertfields & ",cus_customer"
@@ -525,10 +498,10 @@ Partial Public Class crC_class
                     insertvalues = insertvalues & ",cus_department='" & lcus_department & "'"
                 End If
                 If cus_category.Enabled = True Then
-                    insertvalues = insertvalues & ",cus_category='" & lcus_category & "'"
+                    insertvalues = insertvalues & ",cus_category='" & cus_category_hidden.Value & "'"
                 End If
                 If cus_module.Enabled = True Then
-                    insertvalues = insertvalues & ",cus_module='" & lcus_module & "'"
+                    insertvalues = insertvalues & ",cus_module='" & cus_module_hidden.Value & "'"
                 End If
                 If cus_crtype.Enabled = True Then
                     insertvalues = insertvalues & ",cus_crtype='" & cus_crtype.Text.Replace("'", "''") & "'"
@@ -651,12 +624,24 @@ Partial Public Class crC_class
 
     End Sub
 
-    Protected Sub cus_department_SelectedIndexChanged(ByVal sender As Object, ByVal e As EventArgs)
-        LoadCategories(cus_department.SelectedValue)
+    'Protected Sub cus_department_SelectedIndexChanged(ByVal sender As Object, ByVal e As EventArgs) Handles cus_department.SelectedIndexChanged
+    '    LoadCategories(cus_department.SelectedValue)
+
+    '    'updatepanelDepartment.Update()
+    'End Sub
+
+    Protected Sub LoadCategories(ByVal departmentId As String)
+        cus_category.Items.Clear()
+        cus_category.DataSource = backend.GetCategoryList(departmentId)
+        cus_category.DataValueField = "cat_id"
+        cus_category.DataTextField = "cat_description"
+        cus_category.DataBind()
+        cus_category.Items.Insert(0, New ListItem("Please Select", ""))
+
     End Sub
 
     <WebMethod>
-    Public Shared Function LoadCategories(ByVal departmentId As String) As List(Of ListItem)
+    Public Shared Function LoadCategories1(ByVal departmentId As String) As List(Of ListItem)
 
         Try
 
@@ -676,7 +661,7 @@ Partial Public Class crC_class
 
             Dim category As New List(Of ListItem)()
 
-            category.Add(New ListItem() With {.Value = "", .Text = "Please Select"})
+            category.Add(New ListItem() With {.Value = "", .Text = "Please Select", .Selected = True})
 
             For Each dr In ds.Tables("datarecords").Rows
                 category.Add(New ListItem() With {
@@ -694,12 +679,23 @@ Partial Public Class crC_class
 
     End Function
 
-    Protected Sub cus_category_SelectedIndexChanged(ByVal sender As Object, ByVal e As EventArgs)
-        Call savedatadata(False, "")
+    'Protected Sub cus_category_SelectedIndexChanged(ByVal sender As Object, ByVal e As EventArgs) Handles cus_category.SelectedIndexChanged
+    '    LoadModules(cus_category.SelectedValue)
+
+    '    'updatepanel2.Update()
+    'End Sub
+
+    Protected Sub LoadModules(ByVal categoryId As String)
+        cus_module.Items.Clear()
+        cus_module.DataSource = backend.GetModuleList(categoryId)
+        cus_module.DataValueField = "mod_id"
+        cus_module.DataTextField = "mod_description"
+        cus_module.DataBind()
+        cus_module.Items.Insert(0, New ListItem("Please Select", ""))
     End Sub
 
     <WebMethod>
-    Public Shared Function LoadModules(ByVal categoryId As String) As List(Of ListItem)
+    Public Shared Function LoadModules1(ByVal categoryId As String) As List(Of ListItem)
 
         Try
 
@@ -736,19 +732,17 @@ Partial Public Class crC_class
         End Try
     End Function
 
-    'Protected Sub cus_chargeable_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cus_chargeable.SelectedIndexChanged
-    '    Call savedatadata(False, "")
-    '    'If cus_chargeable.SelectedValue = "" Then
-    '    '    genreportbtn.Visible = False
+    Protected Sub cus_chargeable_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cus_chargeable.SelectedIndexChanged
+        Call savedatadata(False, "")
+        'If cus_chargeable.SelectedValue = "" Then
+        '    genreportbtn.Visible = False
 
-    '    'Else
-    '    '    genreportbtn.Visible = True
+        'Else
+        '    genreportbtn.Visible = True
 
-    '    'End If
+        'End If
 
-
-
-    'End Sub
+    End Sub
 
     Protected Sub cus_testingstatus_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cus_testingstatus.SelectedIndexChanged
         Call savedatadata(False, "")

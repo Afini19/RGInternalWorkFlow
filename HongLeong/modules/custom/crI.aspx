@@ -17,6 +17,7 @@
     <title></title>
     <!--#include File="../../topinitdetail.aspx"-->
     <script src="<%=ResolveClientUrl("~/plugins/blocker/jquery.blockUI.js")%>" type="text/javascript" charset="utf-8"></script>
+
     <style type="text/css">
         input[type=submit] {
             margin: 0.1rem;
@@ -159,7 +160,7 @@
                                 <div class="col-md-4">Date&nbsp;<font class="cssrequired">*</font></div>
                                 <div class="col-md-4">
                                     <div class=" validation-content" style="position: relative;">
-                                        <uc:datepicker ID="cus_date" runat="server" Style="width: 100%" class="validate[required]" ValidationGroup="1-" Enabled="false"/>
+                                        <uc:datepicker ID="cus_date" runat="server" Style="width: 100%" class="validate[required]" ValidationGroup="1-" Enabled="false" Visible="true"/>
                                     </div>
                                 </div>
                             </div>
@@ -168,27 +169,27 @@
                                 <div class="col-md-4">Department&nbsp;<font class="cssrequired">*</font></div>
                                 <div class="col-md-8">
                                     <div class="validation-content" style="position: relative;">
-<%--                                        <asp:DropDownList ID="cus_department" runat="server" CssClass="validate[required]" Width="100%" ValidationGroup="1-" AutoPostBack="true" OnSelectedIndexChanged="cus_department_SelectedIndexChanged"></asp:DropDownList>--%>
+<%--                                        <asp:DropDownList ID="cus_department" runat="server" CssClass="validate[required]" Width="100%" ValidationGroup="1-" OnSelectedIndexChanged="cus_department_SelectedIndexChanged" AutoPostBack="true" EnableViewState="true"></asp:DropDownList>--%>
                                         <asp:DropDownList ID="cus_department" runat="server" CssClass="validate[required]" Width="100%" ValidationGroup="1-" AutoPostBack="false"></asp:DropDownList>
                                     </div>
                                 </div>
                             </div>
-
+                                
                             <div class="row mb-1">
                                 <div class="col-md-4">1st level Category&nbsp;<font class="cssrequired">*</font></div>
                                 <div class="col-md-8">
                                     <div class="validation-content" style="position: relative;">
-                                        <%--<asp:DropDownList ID="cus_category" runat="server" Style="width: 100%" ValidationGroup="1-" CssClass="validate[required]" AutoPostBack="true" OnSelectedIndexChanged="cus_category_SelectedIndexChanged"></asp:DropDownList>--%>
-                                        <asp:DropDownList ID="cus_category" runat="server" Style="width: 100%" ValidationGroup="1-" CssClass="validate[required]" AutoPostBack="false"></asp:DropDownList>
+<%--                                        <asp:DropDownList ID="cus_category" runat="server" Style="width: 100%" ValidationGroup="1-" CssClass="validate[required]" AutoPostBack="true" OnSelectedIndexChanged="cus_category_SelectedIndexChanged" EnableViewState="true"></asp:DropDownList>--%>
+                                        <asp:DropDownList ID="cus_category" runat="server" CssClass="validate[required]" Width="100%" ValidationGroup="1-" AutoPostBack="false"></asp:DropDownList>
                                     </div>
                                 </div>
                             </div>
-
+                            
                             <div class="row mb-1">
                                 <div class="col-md-4">2nd level Module&nbsp;<font class="cssrequired">*</font></div>
                                 <div class="col-md-8">
                                     <div class="validation-content" style="position: relative;">
-                                        <asp:DropDownList ID="cus_module" runat="server" Style="width: 100%" ValidationGroup="1-" class="validate[required]"></asp:DropDownList>
+                                        <asp:DropDownList ID="cus_module" runat="server" Style="width: 100%" ValidationGroup="1-" CssClass="validate[required]"></asp:DropDownList>
                                     </div>
                                 </div>
                             </div>
@@ -233,7 +234,7 @@
                                 <div class="col-md-4">Development man-days&nbsp;<font class="cssrequired">*</font></div>
                                 <div class="col-md-8">
                                     <div class="validation-content" style="position: relative;">
-                                        <asp:TextBox ID="cus_devmandays" runat="server" Style="width: 70%" MaxLength="50" class="validate[required,custom[number]]" ValidationGroup="1-" ></asp:TextBox>&nbsp;man-days
+                                        <asp:TextBox ID="cus_devmandays" runat="server" Style="width: 70%" MaxLength="50" class="validate[required,custom[number]]" ValidationGroup="1-" >0</asp:TextBox>&nbsp;man-days
                                     </div>
                                 </div>
 
@@ -243,7 +244,7 @@
                                 <div class="col-md-4">Internal testing man-days&nbsp;<font class="cssrequired">*</font></div>
                                 <div class="col-md-8">
                                     <div class="validation-content" style="position: relative;">
-                                        <asp:TextBox ID="cus_testingmandays" runat="server" Style="width: 70%" MaxLength="50" class="validate[required,custom[number]]"  ValidationGroup="1-"></asp:TextBox>&nbsp;man-days
+                                        <asp:TextBox ID="cus_testingmandays" runat="server" Style="width: 70%" MaxLength="50" class="validate[required,custom[number]]"  ValidationGroup="1-">0</asp:TextBox>&nbsp;man-days
                                     </div>
                                 </div>
 
@@ -568,6 +569,8 @@
                 <input type="hidden" runat="server" id="ccode" name="ccode" />
                 <input type="hidden" runat="server" id="lvlvalid" name="lvlvalid" />
                 <input type="hidden" runat="server" id="createdt" name="createdt" />
+                <input type="hidden" runat="server" id="cus_category_hidden" name="cus_category_hidden" />
+                <input type="hidden" runat="server" id="cus_module_hidden" name="cus_module_hidden" />
 
 
             </div>
@@ -621,12 +624,12 @@
         $(document).on('change', '#cus_department', function (event) {
             event.preventDefault();
 
-
             var selectedValue = $(this).val();
+
 
             $.ajax({
                 type: "POST",
-                url: "crC.aspx/LoadCategories",
+                url: "crC.aspx/LoadCategories1",
                 data: JSON.stringify({ departmentId: selectedValue }),
                 contentType: "application/json; charset=utf-8",
                 dataType: "json",
@@ -636,10 +639,17 @@
 
                     $("#cus_category").empty();
 
+                    $("#cus_module").append($('<option>', {
+                        value: "",
+                        text: "Please Select",
+                        selected: true
+                    }));
+
                     $.each(categories, function (index, category) {
                         $("#cus_category").append($('<option>', {
                             value: category.Value,
-                            text: category.Text
+                            text: category.Text,
+
                         }));
                     });
                 }
@@ -649,12 +659,12 @@
         $(document).on('change', '#cus_category', function (event) {
             event.preventDefault();
 
-
             var selectedValue = $(this).val();
+            $('#cus_category_hidden').val(selectedValue);
 
             $.ajax({
                 type: "POST",
-                url: "crC.aspx/LoadModules",
+                url: "crC.aspx/LoadModules1",
                 data: JSON.stringify({ categoryId: selectedValue }),
                 contentType: "application/json; charset=utf-8",
                 dataType: "json",
@@ -667,11 +677,20 @@
                     $.each(module1, function (index, module2) {
                         $("#cus_module").append($('<option>', {
                             value: module2.Value,
-                            text: module2.Text
+                            text: module2.Text,
+
                         }));
                     });
                 }
             });
+        });
+
+        $(document).on('change', '#cus_module', function (event) {
+            event.preventDefault();
+
+            var selectedValue = $(this).val();
+            $('#cus_module_hidden').val(selectedValue);
+
         });
 
     </script>
