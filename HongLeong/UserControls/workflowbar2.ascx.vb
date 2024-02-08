@@ -2402,9 +2402,10 @@ Partial Public Class UserControls_workflowbar2
     End Sub
     Private Function LoadAreaButton()
 
-        Dim obj As Object
+        Dim obj, obj9 As Object
         'obj = Page.FindControl("phlevel" & wlevel.Value)
         obj = Page.FindControl("commentSubmit")
+        obj9 = Page.FindControl("contoh")
 
         If Not obj Is Nothing Then
 
@@ -2474,7 +2475,6 @@ Partial Public Class UserControls_workflowbar2
                 obj.Controls.Add(objlit)
 
             End If
-
         End If
 
     End Function

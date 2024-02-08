@@ -334,7 +334,7 @@
                             <%End if %>
 
 
-                            <%If lvlvalid.Value = "True" And wfb_bar.wlevelAPget().tostring.trim = "5" Then %>
+                            <%If lvlvalid.Value = "True" And wfb_bar.wlevelAPget().ToString.Trim = "5" And wfb_bar.wlevelAPget().ToString.Trim = "6" Then %>
                             <asp:UpdatePanel runat="server">
                                 <ContentTemplate>
                                     <div class="row mb-1">
@@ -361,39 +361,34 @@
 
 
                             <%If lvlvalid.Value = "True" And wfb_bar.wlevelAPget().tostring.trim = "7" Then %>
-                            <asp:UpdatePanel runat="server">
-                                <ContentTemplate>
-                                    <div class="row mb-1">
-                                        <div class="col-md-3">Tester name&nbsp;<font class="cssrequired">*</font></div>
-                                        <div class="col-md-7">
-                                            <div class="validation-content" style="position: relative;">
-                                                <asp:DropDownList ID="cus_testername" runat="server" Style="width: 100%" class="validate[required]"></asp:DropDownList>
-                                            </div>
-                                        </div>
-
+                            
+                            <div class="row mb-1">
+                                <div class="col-md-3">Tester name&nbsp;<font class="cssrequired">*</font></div>
+                                <div class="col-md-7">
+                                    <div class="validation-content" style="position: relative;">
+                                        <asp:DropDownList ID="cus_testername" runat="server" Style="width: 100%" class="validate[required]"></asp:DropDownList>
                                     </div>
-                                </ContentTemplate>
-                            </asp:UpdatePanel>
-                            <asp:UpdatePanel runat="server">
-                                 <ContentTemplate>
-                                     <div class="row mb-1">
-                                         <div class="col-md-3">Testing Status&nbsp;<font class="cssrequired">*</font></div>
-                                         <div class="col-md-7">
-                                             <div class="validation-content" style="position: relative;"> 
-                                                 <asp:DropDownList ID="cus_testingstatus" runat="server" Style="width: 100%" class="validate[required]" AutoPostBack="true"></asp:DropDownList>
-                                             </div>
-                                         </div>
+                                </div>
 
-                                     </div>
-                                 </ContentTemplate>
-                            </asp:UpdatePanel>
+                            </div>
+                                
+                            
+                            <div class="row mb-1">
+                                <div class="col-md-3">Testing Status&nbsp;<font class="cssrequired">*</font></div>
+                                <div class="col-md-7">
+                                    <div class="validation-content" style="position: relative;"> 
+                                        <asp:DropDownList ID="cus_testingstatus" runat="server" Style="width: 100%" class="validate[required]" AutoPostBack="false" EnableViewState="true"></asp:DropDownList>
+                                    </div>
+                                </div>
+
+                            </div>
+                                
                             <%End if %>
 
                             
-                            <div class="row mb-2">
+                            <div class="row mb-2" id="commentSubmitDiv">
                                 <div class=" col-sm-3">
                                     <asp:PlaceHolder ID="commentSubmit" runat="server"></asp:PlaceHolder>
-
                                 </div>
                             </div>
                             
@@ -705,9 +700,45 @@
 
         });
 
-        
+        $(document).on('change', '#cus_testingstatus', function (event) {
+            event.preventDefault();
 
-        
+            var selectedValue = $(this).val();
+
+            if (selectedValue !== 'Closed') {
+                $('#commentSubmitDiv').css('display','none');  
+            } else {  
+                $('#commentSubmitDiv').css('display', '');  
+            }
+
+        });
+
+        //$(document).on('click', '#genreportbtn', function (event) {
+        //    event.preventDefault();
+
+        //    $.ajax({
+        //        type: "POST",
+        //        url: "crC.aspx/LoadModules1",
+        //        data: JSON.stringify({ categoryId: selectedValue }),
+        //        contentType: "application/json; charset=utf-8",
+        //        dataType: "json",
+        //        success: function (response) {
+
+        //            var module1 = response.d;
+
+        //            $("#cus_module").empty();
+
+        //            $.each(module1, function (index, module2) {
+        //                $("#cus_module").append($('<option>', {
+        //                    value: module2.Value,
+        //                    text: module2.Text,
+
+        //                }));
+        //            });
+        //        }
+        //    });
+
+        //});
 
     </script>
 </body>

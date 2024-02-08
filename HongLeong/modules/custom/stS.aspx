@@ -335,7 +335,7 @@
                                          <div class="col-md-3">Testing Status&nbsp;<font class="cssrequired">*</font></div>
                                          <div class="col-md-7">
                                              <div class="validation-content" style="position: relative;"> 
-                                                 <asp:DropDownList ID="cus_testingstatus" runat="server" Style="width: 100%" class="validate[required]" AutoPostBack="true"></asp:DropDownList>
+                                                 <asp:DropDownList ID="cus_testingstatus" runat="server" Style="width: 100%" class="validate[required]" AutoPostBack="false"></asp:DropDownList>
                                              </div>
                                          </div>
 
@@ -345,7 +345,7 @@
                             <%End if %>
 
 
-                            <div class="row mb-2">
+                            <div class="row mb-2" id="commentSubmitDiv">
                                 <div class=" col-sm-3">
                                     <asp:PlaceHolder ID="commentSubmit" runat="server"></asp:PlaceHolder>
 
@@ -654,6 +654,19 @@
 
             var selectedValue = $(this).val();
             $('#cus_module_hidden').val(selectedValue);
+
+        });
+
+        $(document).on('change', '#cus_testingstatus', function (event) {
+            event.preventDefault();
+
+            var selectedValue = $(this).val();
+
+            if (selectedValue !== 'Closed') {
+                $('#commentSubmitDiv').css('display', 'none');
+            } else {
+                $('#commentSubmitDiv').css('display', '');
+            }
 
         });
 

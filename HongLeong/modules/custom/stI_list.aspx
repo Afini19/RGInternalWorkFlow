@@ -107,7 +107,7 @@
                     <asp:Literal ID="filterhead" runat="server"></asp:Literal>
                     <div style="padding-top: 1em;">
                         <div class="ui-widget-header alert p-1 form-fonts w-100  bg-header " role="alert" style="text-align: left; padding-left: 1em!important; margin-bottom: 1em!important">
-                            <%=_formsname%>
+                            <%=_FormsName%>
                         </div>
                     </div>
                     <table id="table_listing" class="table table-borderless dt-responsive nowrap" width="100%" style="height: 100%; font-size: 0.8rem;" cellpadding="2" cellspacing="1">
@@ -126,7 +126,6 @@
                                 <th class="cssdetail" data-priority="1">&nbsp;</th>
                                 <th class="cssdetail">Task Number</th>
                                 <th class="cssdetail">Support Ticket Number</th>
-                                <th class="cssdetail">Issue Type</th>
                                 <th class="cssdetail" data-priority="2">Priority</th>
                                 <th class="cssdetail">Testing Status</th>
                                 <th class="cssdetail">Created By</th>
@@ -147,9 +146,6 @@
                                         </td>
                                         <td class="cssdetail" style="border-bottom: solid 1px silver">
                                             <asp:Literal ID="stno" runat="server" Text='<%#DataBinder.Eval(Container.DataItem, "cus_stno")%>'></asp:Literal>
-                                        </td>
-                                        <td class="cssdetail" style="border-bottom: solid 1px silver">
-                                            <asp:Literal ID="issuetype" runat="server" Text='<%# "<b>" + DataBinder.Eval(Container.DataItem, "cus_issuetype") + " </b>" %>'></asp:Literal>
                                         </td>
                                         <td class="cssdetail" style="border-bottom: solid 1px silver">
                                             <asp:Literal ID="priority" runat="server" Text='<%# "<b>" + DataBinder.Eval(Container.DataItem, "cus_priority") + " </b>" %>'></asp:Literal>

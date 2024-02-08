@@ -40,7 +40,7 @@ Partial Public Class crI_class
         wfb_bar.workflownamespace = NmSpace
         wfb_bar.custommode = True
         wfb_bar.overridemode = True
-        wfb_bar.attachmentbycreatoronly = True
+        wfb_bar.attachmentbycreatoronly = False
 
         If Page.IsPostBack = False Then
             lblcrno.Text = "<b>Auto Generated</b>"
@@ -137,7 +137,7 @@ Partial Public Class crI_class
 
     Private Sub enabledisablesubmitbutton()
         If wfb_bar.wlevelAPget().ToString.Trim = "7" And cus_testingstatus.SelectedValue <> "Closed" Then
-            commentSubmit.Visible = False
+            ScriptManager.RegisterStartupScript(Me, Me.GetType(), "HideDiv", "$('#commentSubmitDiv').hide();", True)
         End If
     End Sub
 
@@ -321,9 +321,9 @@ Partial Public Class crI_class
                 End If
 
                 'cus_devduedate.Textdmy = dr("cus_devduedate") & ""
-                cus_devname.Text = dr("cus_devname") & ""
-                cus_testername.Text = dr("cus_testername") & ""
-                cus_testingstatus.Text = dr("cus_testingstatus") & ""
+                cus_devname.SelectedValue = dr("cus_devname") & ""
+                cus_testername.SelectedValue = dr("cus_testername") & ""
+                cus_testingstatus.SelectedValue = dr("cus_testingstatus") & ""
 
                 cus_refno.Text = dr("cus_refno") & ""
                 lblcrno.Text = dr("cus_crno") & ""
@@ -345,7 +345,7 @@ Partial Public Class crI_class
             End If
 
             Call SetFieldRights()
-            Call enabledisablesubmitbutton()
+            'Call enabledisablesubmitbutton()
 
         Catch ex As Exception
             lblMessage.Text = WebLib.getAlertMessageStyle(ex.Message)
@@ -724,22 +724,6 @@ Partial Public Class crI_class
             LogtheAudit(ex.Message)
         End Try
     End Function
-
-    Protected Sub cus_chargeable_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cus_chargeable.SelectedIndexChanged
-        Call savedatadata(False, "")
-        'If cus_chargeable.SelectedValue = "" Then
-        '    genreportbtn.Visible = False
-
-        'Else
-        '    genreportbtn.Visible = True
-
-        'End If
-
-    End Sub
-
-    Protected Sub cus_testingstatus_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cus_testingstatus.SelectedIndexChanged
-        Call savedatadata(False, "")
-    End Sub
 
     Public Shared Sub LogtheAudit(ByVal theMessage As String)
         Dim strFile As String = "c:\officeonelog\ErrorLog3.txt"
