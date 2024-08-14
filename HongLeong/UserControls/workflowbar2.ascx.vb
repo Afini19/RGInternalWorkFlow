@@ -284,7 +284,7 @@ Partial Public Class UserControls_workflowbar2
                                 " left join workflowitems on c.wf_level = wui_no and wui_wid = '" & wwid.Value & "'  " &
                                 " where wf_refno = '" & wucode.Value & "' and wf_notdraft = 1  " &
                                 " order by wui_no, c.createddate "
-
+            LogtheAudit(cmd.CommandText)
             cmd.Connection = cn
             ad.SelectCommand = cmd
             ad.Fill(ds, "datarecords")
@@ -1877,6 +1877,7 @@ Partial Public Class UserControls_workflowbar2
                         lstring = lstring & "&nbsp;&nbsp;<span style=""color:red"" class=""fas fa-minus""></span> <br>"
                     End If
                 Next
+                LogtheAudit(cmd.CommandText)
                 cn.Close()
                 cmd.Dispose()
                 cn.Dispose()
@@ -1895,7 +1896,7 @@ Partial Public Class UserControls_workflowbar2
                 For Each dr In ds.Tables("datarecords3").Rows
                     lstring = lstring & dr("usr_name") & "<br>"
                 Next
-
+                LogtheAudit(cmd.CommandText)
                 If lstring.Trim <> "" Then
                     lstring = "<font color=""blue"">" & lstring & "</font><br><br>"
                 End If
@@ -1921,6 +1922,7 @@ Partial Public Class UserControls_workflowbar2
                 For Each dr In ds.Tables("datarecords").Rows
                     lstring = lstring & dr("usr_name") & "<br>"
                 Next
+                LogtheAudit(cmd.CommandText)
                 cn.Close()
                 cmd.Dispose()
                 cn.Dispose()
@@ -2012,6 +2014,8 @@ Partial Public Class UserControls_workflowbar2
                                 " where wfa_ucode='" & wucode.Value & "' " &
                                 " order by a.wfa_level, wfa_createon asc "
 
+            LogtheAudit(cmd.CommandText)
+
             cmd.Connection = cn
             ad.SelectCommand = cmd
             ad.Fill(ds, "datarecords")
@@ -2042,11 +2046,12 @@ Partial Public Class UserControls_workflowbar2
             '      litAudit.Text = "<b>Audit Logs</b><br>" & lstring
             Return ds
         Catch ex As Exception
+            LogtheAudit(ex.Message)
             lblMessage.Text = WebLib.getAlertMessageStyle(ex.Message)
             Return ds
 
         End Try
-
+        Return ds
 
 
     End Function
@@ -2180,6 +2185,31 @@ Partial Public Class UserControls_workflowbar2
 
 
     End Function
+
+    Public Function GetBaseUrl() As String
+        ' Get the current request
+        Dim request = HttpContext.Current.Request
+
+        ' Build the base URL with scheme and host
+        Dim baseUrl As String = request.Url.Scheme & "://" & request.Url.Host
+
+        ' Add the port if it's not the default for the scheme
+        If request.Url.Port <> 80 AndAlso request.Url.Port <> 443 Then
+            baseUrl &= ":" & request.Url.Port
+        End If
+
+        ' Include the application's virtual path (ensuring it has a trailing slash)
+        Dim virtualPath = HttpRuntime.AppDomainAppVirtualPath
+        If Not virtualPath.EndsWith("/") Then
+            virtualPath &= "/"
+        End If
+
+        baseUrl &= virtualPath
+
+        Return baseUrl
+    End Function
+
+
     Private Sub GetAttachments()
         Dim cn As New OleDbConnection(connectionstring)
         Dim cmd As New OleDbCommand()
@@ -2215,7 +2245,8 @@ Partial Public Class UserControls_workflowbar2
             ad.Fill(ds, "datarecords")
             For Each dr In ds.Tables("datarecords").Rows
                 obj.InitFile(dr("doc_attach1") & "")
-                webRootPath = objWebLib.AbsoluteWebPath & ConfigurationManager.AppSettings("filespathhttpiissub")
+                LogtheAudit(GetBaseUrl())
+                webRootPath = GetBaseUrl() & ConfigurationManager.AppSettings("filespathhttpiissub")
                 wfdocpath = Path.Combine(webRootPath, dr("doc_attach1path").ToString.Trim & dr("doc_attach1").ToString.Trim)
 
                 lstring = lstring & "<table width=""100%""><tr><td width=""20%"" valign=""top""><img src=""" & WebLib.ClientURL(obj.FileImageFile) & """ width=""100%""></td><td width=""80%"" valign=""top"" class=""cssdetail""><b><a href=""#"" onClick=""$.colorbox({iframe:true,opacity:0.5,trapFocus:true,href: '" & wfdocpath & "',width:'90%',height:'90%'})"">" & dr("doc_subject") & "</a></b><br><font color=""gray"">" & obj.FileType & "</font></td></tr></table>"
@@ -2898,6 +2929,20 @@ Partial Public Class UserControls_workflowbar2
         Return str
 
     End Function
+
+    Public Shared Sub LogtheAudit(ByVal theMessage As String)
+        Dim strFile As String = "c:\officeonelog\ErrorLogWF.txt"
+        Dim fileExists As Boolean = File.Exists(strFile)
+
+        Try
+
+            Using sw As New StreamWriter(File.Open(strFile, FileMode.Append))
+                sw.WriteLine(DateTime.Now & " - " & theMessage)
+            End Using
+        Catch ex As Exception
+
+        End Try
+    End Sub
 
 End Class
 

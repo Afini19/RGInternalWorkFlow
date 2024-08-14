@@ -13,7 +13,7 @@ Partial Public Class modlist_class
     Protected Sub Page_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
         _searchkeystr = "mod_description;Module Name;S|"""
 
-        listingpage = "deptlist.aspx"
+        listingpage = "catlist.aspx?ga=" & deptid.Value
         _FormsName = "Module Maintenance"
         'columnscount = "10"
         TableName = "module"
@@ -32,9 +32,9 @@ Partial Public Class modlist_class
         ViewRights = "" '"SM0004"
         FullRights = ""
         NmSpace = "mstrcategory" 'can change
-        pFieldNames = " * " 'dont know
+        pFieldNames = " * "
         pJoinFields = ""
-        btnback.Visible = False
+        btnback.Visible = True
 
 
         If Page.IsPostBack = False Then
@@ -48,17 +48,17 @@ Partial Public Class modlist_class
 
         End If
 
-        btnback.Visible = False
+        btnback.Visible = True
 
         Call InitLoad()
     End Sub
     Protected Sub rep_ItemCommand(ByVal source As Object, ByVal e As System.Web.UI.WebControls.RepeaterCommandEventArgs) Handles rep.ItemCommand
         If e.CommandName = "Edit" Then
-            Response.Redirect("postpage.aspx?NextPage=" & DetailPage & "&ga=" & e.CommandArgument & "&ba=" & bid.Value)
+            Response.Redirect("postpage.aspx?NextPage=" & DetailPage & "&la=" & catid.Value & "&da=" & deptid.Value & "&ga=" & e.CommandArgument & "&ba=" & bid.Value)
         End If
         If e.CommandName = "Delete" Then
             Call DeleteRec(e.CommandArgument)
-            Call gotoback()
+            Response.Redirect("postpage.aspx?NextPage=" & WebLib.ClientURL("modlist.aspx") & "&ga=" & catid.Value & "&la=" & deptid.Value)
         End If
         'If e.CommandName = "Rights" Then
         '    Response.Redirect("postpage.aspx?NextPage=wgrouprights.aspx&ga=" & e.CommandArgument & "&ba=" & e.CommandArgument)

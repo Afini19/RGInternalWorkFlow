@@ -26,7 +26,7 @@ Partial Public Class message_class
     End Sub
 
     Public Sub gonextpage(ByVal sender As System.Object, ByVal e As System.EventArgs)
-        Response.Redirect(bid.Value)
+        Response.Redirect("Home.aspx")
     End Sub
 
 End Class

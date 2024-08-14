@@ -39,10 +39,10 @@
                             </div>
                             <div class="card-body">
                                 <asp:Button ID="SubmitButton" CssClass="btn btn-sm btn-info w-100 m-1" Text="Save Details" runat="server" OnClick="savepage" />
-
-                                <asp:Button ID="BackButton" CssClass="btn btn-sm btn-info w-100 m-1" Text="Back to Listing" runat="server" OnClick="backpage" CausesValidation="false" OnClientClick="jQuery('#frmform').validationEngine('detach');" />
                                 <br />
-                                
+                                <br />
+                                <asp:Button ID="BackButton" CssClass="btn btn-sm btn-info w-100 m-1" Text="Back to Listing" runat="server" OnClick="gotobackpage" CausesValidation="false" OnClientClick="jQuery('#frmform').validationEngine('detach');" />
+                                <br />
                                 <br />
                                 <b>Messages:</b><br />
                                 <asp:Label ID="lblMessage" runat="server" class="cssrequired"></asp:Label>
@@ -115,6 +115,7 @@
                         <input type="hidden" runat="server" id="bid" name="bid"/>
                         <input type="hidden" runat="server" id="uid" name="uid"/>
                         <input type="hidden" runat="server" id="deptid" name="deptid"/>
+                        <input type="hidden" runat="server" id="ba" name="ba" />
                     </div>
                 </div>
             </div>

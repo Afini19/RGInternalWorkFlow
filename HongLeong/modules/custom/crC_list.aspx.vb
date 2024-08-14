@@ -32,16 +32,22 @@ Partial Public Class crC_list_class
         DelRights = "" ' "SM0003"
         ModRights = "" '"SM0002"
         ViewRights = "" '"SM0004"
-        FullRights = "AA0005" 'dont know
+        FullRights = "AA0005"
         NmSpace = "zcustom_crC"
 
 
         backend.DeleteOldDraft(TableName)
 
-        pFieldNames = " workflowstatus.*,zcustom_crC.*,usr_name,ApprovalLevelName = (" & clsWorkflow.getLevelNameSQL("wst_workflowid", "wst_level") & ") "
-        pJoinFields = " inner join workflowstatus on cus_ucode = wst_ucode left outer join secuserinfo on cus_createby = usr_loginid "
+        'pFieldNames = " workflowstatus.*,zcustom_crC.*,usr_name,ApprovalLevelName = (" & clsWorkflow.getLevelNameSQL("wst_workflowid", "wst_level") & ") "
+        pFieldNames = " * from ( Select workflowstatus.*, " & TableName & ".*,ApprovalLevelName = wui_name, tempwfi.[value] as [rights] "
 
-        LogtheAudit("Select " + _selectprefix + " " + pFieldNames + " from " + TableName + " " + pJoinFields + " ")
+        'pJoinFields = " inner join workflowstatus on cus_ucode = wst_ucode left outer join secuserinfo on cus_createby = usr_loginid "
+        pJoinFields = "inner join workflowstatus on cus_ucode = wst_ucode " &
+                        "left join (Select * From workflowitems Cross apply string_split(replace(isnull(wui_rights,''),';;',',') + '0',',') where value <> 0 ) tempwfi on tempwfi.wui_wid=wst_workflowid and isnull(tempwfi.wui_no,0)=wst_level " &
+                        "left outer join secuserinfo on cus_createby = usr_loginid ) as k "
+        '"inner join wgrouprights on wur_wgroupid = rights and wur_wgroupid not in (49) left join secuserinfo secwur on wur_uid = secwur.usr_id "
+
+        LogtheAudit("Select " + _selectprefix + " " + pFieldNames + " from " + TableName + " " + pJoinFields + " " + _searchfilter)
 
         If Page.IsPostBack = False Then
             bid.Value = Request("ba")
@@ -87,7 +93,7 @@ Partial Public Class crC_list_class
             pendinglevel.Items.Insert(0, New ListItem("Please Select", ""))
 
             pendingperson.DataSource = backend.GetUserList()
-            pendingperson.DataValueField = "usr_name"
+            pendingperson.DataValueField = "usr_code"
             pendingperson.DataTextField = "usr_name"
             pendingperson.DataBind()
             pendingperson.Items.Insert(0, New ListItem("Please Select", ""))
@@ -167,6 +173,7 @@ Partial Public Class crC_list_class
 
     End Sub
     Public Sub shortcut1(ByVal sender As System.Object, ByVal e As System.EventArgs)
+        filterhead.Text = "Filter : <b>" & sender.Text & "</b>"
         Call loaddata(" wst_status='Pending' ")
 
     End Sub
@@ -404,7 +411,7 @@ Partial Public Class crC_list_class
                 If (lFilterStatement & "").Trim <> "" Then
                     lFilterStatement = lFilterStatement & " and "
                 End If
-                lFilterStatement = lFilterStatement & WebSearchCR.CR_PendingPerson(theObject)
+                lFilterStatement = lFilterStatement & WebSearchCR.CR_PendingPerson(theObject, clsWorkflow.getUserCodebyWorkFlowSQL("wst_workflowid", "wst_level"))
             End If
         End If
 
@@ -451,7 +458,7 @@ Partial Public Class crC_list_class
     End Sub
 
     Public Sub LogtheAudit(ByVal theMessage As String)
-        Dim strFile As String = "c:\officeonelog\ErrorLog3.txt"
+        Dim strFile As String = "c:\officeonelog\ErrorLogWF.txt"
         Dim fileExists As Boolean = File.Exists(strFile)
 
         Try

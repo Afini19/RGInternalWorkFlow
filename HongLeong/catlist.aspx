@@ -43,8 +43,9 @@
                             <div id="opt" class="collapse">
                                 <div class="card-body">
                                     <asp:Button ID="btnadd" CssClass="btn btn-sm btn-info w-100" Text="Add New Record" runat="server" OnClick="AddEventAdd" /><br />
-
-                                    <asp:Button ID="btnback" Text="Back to Listing" runat="server" OnClick="backpage" CausesValidation="false" />
+                                    <br />
+                                    <asp:Button ID="btnback" CssClass="btn btn-info btn-sm w-100" Text="Back to Department" runat="server" OnClick="backpage" CausesValidation="false" />
+                                    <br />
                                     <br />
                                     <b>Messages:</b><br />
                                     <asp:Label ID="lblMessage" runat="server"></asp:Label>
@@ -127,6 +128,7 @@
         <input type="hidden" runat="server" id="rid" name="rid" />
         <input type="hidden" runat="server" id="bid" name="bid" />
         <input type="hidden" runat="server" id="deptid" name="deptid" />
+        <input type="hidden" runat="server" id="ba" name="ba" />
         <hr width="100%" />
         <!--#include File="include/FormFooter1.aspx"-->
     </form>

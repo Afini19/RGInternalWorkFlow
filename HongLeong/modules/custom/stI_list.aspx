@@ -157,7 +157,7 @@
                                             <asp:Literal ID="Literal2" runat="server" Text='<%#DataBinder.Eval(Container.DataItem, "cus_uno") + If(DataBinder.Eval(Container.DataItem, "wst_refno").ToString() = "", "", "<br/>( Ticket No. " + DataBinder.Eval(Container.DataItem, "wst_refno") + " )")%>'></asp:Literal>
                                         </td>--%>
                                         <td class="cssdetail" style="border-bottom: solid 1px silver">
-                                            <asp:Literal ID="Literal3" runat="server" Text='<%#DataBinder.Eval(Container.DataItem, "usr_name") + " " + DataBinder.Eval(Container.DataItem, "wst_createon")%>'></asp:Literal>
+                                            <asp:Literal ID="Literal3" runat="server" Text='<%#DataBinder.Eval(Container.DataItem, "cus_createby") + " " + DataBinder.Eval(Container.DataItem, "wst_createon")%>'></asp:Literal>
                                         </td>
                                         <td class="cssdetail" style="border-bottom: solid 1px silver">
                                             <asp:Literal ID="Literal5" runat="server" Text=' <%# "<b>" + If(Eval("wst_status").ToString() = "Pending", "Pending <b>" + DataBinder.Eval(Container.DataItem, "ApprovalLevelName") + "</b>", DataBinder.Eval(Container.DataItem, "wst_status")) + " </b>" %>'></asp:Literal>

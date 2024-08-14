@@ -38,6 +38,7 @@ Partial Public Class catlist_class
         If Page.IsPostBack = False Then
 
             deptid.Value = Request("ga") & ""
+            ba.Value = Request("ba") & ""
             _searchfilter = "cat_deptid = '" & deptid.Value & "'"
 
         Else
@@ -45,18 +46,18 @@ Partial Public Class catlist_class
 
         End If
 
-        btnback.Visible = False
+        btnback.Visible = True
 
         Call InitLoad()
 
     End Sub
     Protected Sub rep_ItemCommand(ByVal source As Object, ByVal e As System.Web.UI.WebControls.RepeaterCommandEventArgs) Handles rep.ItemCommand
         If e.CommandName = "Edit" Then
-            Response.Redirect("postpage.aspx?NextPage=" & DetailPage & "&ga=" & e.CommandArgument & "&ba=" & bid.Value)
+            Response.Redirect("postpage.aspx?NextPage=" & DetailPage & "&la=" & deptid.Value & "&ga=" & e.CommandArgument & "&ba=" & bid.Value)
         End If
         If e.CommandName = "Delete" Then
             Call DeleteCategoryRec(e.CommandArgument)
-            Call gotoback()
+            Response.Redirect("postpage.aspx?NextPage=" & WebLib.ClientURL("catlist.aspx") & "&ga=" & deptid.Value)
         End If
         If e.CommandName = "viewMod" Then
             Response.Redirect("postpage.aspx?NextPage=modlist.aspx&ga=" & e.CommandArgument & "&ba=" & e.CommandArgument & "&la=" & deptid.Value)
@@ -110,7 +111,7 @@ Partial Public Class catlist_class
     End Sub
 
     Public Sub AddEventAdd(ByVal sender As System.Object, ByVal e As System.EventArgs)
-        Response.Redirect("postpage.aspx?NextPage=" & WebLib.ClientURL("category.aspx") & "&la=" & deptid.Value & "")
+        Response.Redirect("postpage.aspx?NextPage=" & WebLib.ClientURL("category.aspx") & "&la=" & deptid.Value & "&ba=" & ba.Value)
     End Sub
 End Class
 

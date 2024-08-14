@@ -36,11 +36,12 @@ Partial Public Class category_class
             'Call WebLib.SetListItems(wf_classification, WebLib.ClassificationString)
         End If
 
-        BackButton.Visible = False
+        BackButton.Visible = True
 
         If Page.IsPostBack = False Then
 
             deptid.Value = Request("la") & ""
+            ba.Value = Request("ba") & ""
 
         End If
 
@@ -166,13 +167,17 @@ Partial Public Class category_class
 
             If savedata(insertfields, insertvalues) = True Then
                 'Call gotoback()
-                Response.Redirect("deptlist.aspx")
+                Response.Redirect("catlist.aspx?ga=" & deptid.Value)
             End If
         Catch Err As Exception
             lblMessage.Text = WebLib.getAlertMessageStyle(Err.Message)
         Finally
 
         End Try
+    End Sub
+
+    Public Sub gotobackpage(ByVal sender As System.Object, ByVal e As System.EventArgs)
+        Response.Redirect("postpage.aspx?NextPage=" & WebLib.ClientURL("catlist.aspx") & "&ga=" & deptid.Value & "&ba=" & ba.Value)
     End Sub
 
 End Class

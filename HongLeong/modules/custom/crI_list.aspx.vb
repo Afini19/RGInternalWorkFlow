@@ -36,8 +36,14 @@ Partial Public Class crI_list_class
 
         backend.DeleteOldDraft(TableName)
 
-        pFieldNames = " workflowstatus.*,zcustom_crI.*,usr_name,ApprovalLevelName = (" & clsWorkflow.getLevelNameSQL("wst_workflowid", "wst_level") & ") "
-        pJoinFields = " inner join workflowstatus on cus_ucode = wst_ucode left outer join secuserinfo on cus_createby = usr_loginid "
+        'pFieldNames = " workflowstatus.*,zcustom_crI.*,usr_name,ApprovalLevelName = (" & clsWorkflow.getLevelNameSQL("wst_workflowid", "wst_level") & ") "
+        pFieldNames = " * from ( Select workflowstatus.*, " & TableName & ".*,ApprovalLevelName = wui_name, tempwfi.[value] as [rights] "
+
+        'pJoinFields = " inner join workflowstatus on cus_ucode = wst_ucode left outer join secuserinfo on cus_createby = usr_loginid "
+        pJoinFields = "inner join workflowstatus on cus_ucode = wst_ucode " &
+                        "left join (Select * From workflowitems Cross apply string_split(replace(isnull(wui_rights,''),';;',',') + '0',',') where value <> 0 ) tempwfi on tempwfi.wui_wid=wst_workflowid and isnull(tempwfi.wui_no,0)=wst_level " &
+                        "left outer join secuserinfo on cus_createby = usr_loginid ) as k "
+        '"inner join wgrouprights on wur_wgroupid = rights and wur_wgroupid not in (49) left join secuserinfo secwur on wur_uid = secwur.usr_id "
 
         LogtheAudit("Select " + _selectprefix + " " + pFieldNames + " from " + TableName + " " + pJoinFields + " ")
 
@@ -391,7 +397,7 @@ Partial Public Class crI_list_class
                 If (lFilterStatement & "").Trim <> "" Then
                     lFilterStatement = lFilterStatement & " and "
                 End If
-                lFilterStatement = lFilterStatement & WebSearchCR.CR_PendingPerson(theObject)
+                lFilterStatement = lFilterStatement & WebSearchCR.CR_PendingPerson(theObject, clsWorkflow.getUserCodebyWorkFlowSQL("wst_workflowid", "wst_level"))
             End If
         End If
 

@@ -156,13 +156,13 @@
                                             <asp:Literal ID="Literal2" runat="server" Text='<%#DataBinder.Eval(Container.DataItem, "cus_uno") + If(DataBinder.Eval(Container.DataItem, "wst_refno").ToString() = "", "", "<br/>( Ticket No. " + DataBinder.Eval(Container.DataItem, "wst_refno") + " )")%>'></asp:Literal>
                                         </td>--%>
                                         <td class="cssdetail" style="border-bottom: solid 1px silver">
-                                            <asp:Literal ID="Literal3" runat="server" Text='<%#DataBinder.Eval(Container.DataItem, "usr_name") + " " + DataBinder.Eval(Container.DataItem, "wst_createon")%>'></asp:Literal>
+                                            <asp:Literal ID="createon" runat="server" Text='<%#DataBinder.Eval(Container.DataItem, "cus_createby") + " " + DataBinder.Eval(Container.DataItem, "wst_createon")%>'></asp:Literal>
                                         </td>
                                         <td class="cssdetail" style="border-bottom: solid 1px silver">
-                                            <asp:Literal ID="Literal5" runat="server" Text=' <%# "<b>" + If(Eval("wst_status").ToString() = "Pending", "Pending <b>" + DataBinder.Eval(Container.DataItem, "ApprovalLevelName") + "</b>", DataBinder.Eval(Container.DataItem, "wst_status")) + " </b>" %>'></asp:Literal>
+                                            <asp:Literal ID="status" runat="server" Text=' <%# "<b>" + If(Eval("wst_status").ToString() = "Pending", "Pending <b>" + DataBinder.Eval(Container.DataItem, "ApprovalLevelName") + "</b>", DataBinder.Eval(Container.DataItem, "wst_status")) + " </b>" %>'></asp:Literal>
                                         </td>
                                         <td class="cssdetail" style="border-bottom: solid 1px silver">
-                                            <asp:Literal ID="Literal4" runat="server" Text='<%# DataBinder.Eval(Container.DataItem, "wst_lastupdateon")%>'></asp:Literal>
+                                            <asp:Literal ID="updateon" runat="server" Text='<%# DataBinder.Eval(Container.DataItem, "wst_lastupdateon")%>'></asp:Literal>
                                         </td>
                                         <td class="cssdetail" style="border-bottom: solid 1px silver">
                                             <a href='<%# WebLib.ClientURL(Redirector.Redirect(DataBinder.Eval(Container.DataItem, "wst_module"), DataBinder.Eval(Container.DataItem, "wst_ucode"))) %>'>View Document</a>
@@ -271,6 +271,14 @@
                 responsive: true,
                 "info": true,
                 "bFilter": false
+                
+            });
+
+            $('#table_listing').on('click', 'tr', function () {
+                var href = $(this).find('a').attr('href');
+                if (href) {
+                    window.location.href = href;
+                }
             });
         });
 

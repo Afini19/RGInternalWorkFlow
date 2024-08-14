@@ -32,7 +32,7 @@ Partial Public Class deptlist_class
         ViewRights = "" '"SM0004"
         FullRights = ""
         NmSpace = "mstrcategory" 'can change
-        pFieldNames = " * " 'dont know
+        pFieldNames = " * "
         pJoinFields = ""
         btnback.Visible = False
         Call InitLoad()

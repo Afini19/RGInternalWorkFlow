@@ -1,4 +1,4 @@
-<%@ Page Language="VB" AutoEventWireup="false" EnableViewState="True" CodeFile="crC.aspx.vb" Inherits="crC_class"%>
+<%@ Page Language="VB" AutoEventWireup="false" EnableViewState="True" CodeFile="crC.aspx.vb" Inherits="crC_class" ValidateRequest="False"%>
 
 <%@ Register Src="~/UserControls/DatePicker.ascx" TagPrefix="uc" TagName="DatePicker" %>
 <%@ Register Src="~/UserControls/ImageUploader.ascx" TagPrefix="uc" TagName="ImageUploader" %>
@@ -16,6 +16,11 @@
     <meta name="viewport" content="width=device-width" />
     <title></title>
     <!--#include File="../../topinitdetail.aspx"-->
+
+    <!--quill-->
+    <link href="../../Styles/quill.snow.css" rel="stylesheet">
+    <script src="../../Scripts/quill.js"></script>
+
     <script src="<%=ResolveClientUrl("~/plugins/blocker/jquery.blockUI.js")%>" type="text/javascript" charset="utf-8"></script>
 
     <style type="text/css">
@@ -38,28 +43,30 @@
             transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out;
         }
 
-            input[type=submit]:disabled {
-                margin: 0.1rem;
-                cursor: not-allowed;
-                opacity: .65;
-                box-shadow: none;
-                background-color: #5bc0de;
-                border-color: #5bc0de;
-                color: #fff;
-                padding: .25rem .5rem;
-                font-size: .875rem;
-                line-height: 1.5;
-                border-radius: .2rem;
-                width: 100%;
-                display: inline-block;
-                font-weight: 400;
-                text-align: center;
-                vertical-align: middle;
-                user-select: none;
-                border: 1px solid transparent;
-                transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out;
-            }
+        input[type=submit]:disabled {
+            margin: 0.1rem;
+            cursor: not-allowed;
+            opacity: .65;
+            box-shadow: none;
+            background-color: #5bc0de;
+            border-color: #5bc0de;
+            color: #fff;
+            padding: .25rem .5rem;
+            font-size: .875rem;
+            line-height: 1.5;
+            border-radius: .2rem;
+            width: 100%;
+            display: inline-block;
+            font-weight: 400;
+            text-align: center;
+            vertical-align: middle;
+            user-select: none;
+            border: 1px solid transparent;
+            transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+        }
     </style>
+
+    
     <script type="">
         $(function () {
             $("input[type=submit],input[type=button], button")
@@ -97,6 +104,7 @@
             });
         }
     </script>
+    
     <!--#include File="../../topscriptdetail.aspx"-->
 </head>
 <body>
@@ -142,7 +150,7 @@
                                 <div class="col-md-4" >Title&nbsp;<font class="cssrequired">*</font></div>
                                 <div class="col-md-8">
                                     <div class="validation-content" style="position: relative;">
-                                        <asp:TextBox ID="cus_requestTitle" runat="server" TextMode="MultiLine" Style="width: 100%; height: 50px" MaxLength="300" class="validate[required]" ValidationGroup="1-"></asp:TextBox>
+                                        <asp:TextBox ID="cus_requestTitle" runat="server" Style="width: 100%; height: 50px" class="validate[required]" ValidationGroup="1-"></asp:TextBox>
                                     </div>
                                 </div>
                             </div>
@@ -250,27 +258,47 @@
 
                             </div>
 
-                            <div class="row mb-1">
+                            <%--<div class="row mb-1">
                                 <div class="col-md-4">Technical Requirement&nbsp;</div>
                                 <div class="col-md-8">
                                     <div class="validation-content" style="position: relative;">
-<%--                                        <asp:TextBox ID="cus_technicalReq" runat="server" TextMode="MultiLine" Style="width: 100%; height: 100px" MaxLength="500" class="validate[required]" ValidationGroup="1-"></asp:TextBox>  --%>
-                                        <CKEditor:CKEditorControl ID="cus_technicalReq" runat="server" Width="100%" Height="300px" ValidationGroup="1-"></CKEditor:CKEditorControl>
+                                        <asp:TextBox ID="cus_technicalReq" runat="server" TextMode="MultiLine" Style="width: 100%; height: 500%" ValidateRequestMode="Disabled" Visible="false"></asp:TextBox>
+                                    </div>
+                                </div>
+                            </div>--%>
+
+                            <div class="row mb-1">
+                                <div class="col-md-4">Technical Requirement&nbsp;</div>
+                                <div class="col-md-8">
+                                    <div class="validation-content" style="position: relative;" id="cus_technicalReq">
                                     </div>
                                 </div>
                             </div>
 
+                            <%--<div class="row mb-1">
+                                <div class="col-md-4">Business Requirement&nbsp;</div>
+                                <div class="col-md-8">
+                                    <div class="validation-content" style="position: relative;">
+                                        <asp:TextBox ID="cus_businessReq" runat="server" TextMode="MultiLine" Style="width: 100%; height: 100%" class="validate[required]" ValidationGroup="1-"></asp:TextBox>  
+                                    </div>
+                                </div>
+                            </div>--%>
+
+                            <br />
+                            <br />
+                            <br />
 
                             <div class="row mb-1">
                                 <div class="col-md-4">Business Requirement&nbsp;</div>
                                 <div class="col-md-8">
-                                    <div class="validation-content" style="position: relative;">
-                                        <asp:TextBox ID="cus_businessReq" runat="server" TextMode="MultiLine" Style="width: 100%; height: 200px" MaxLength="500" class="validate[required]" ValidationGroup="1-"></asp:TextBox>  
-<%--                                        <CKEditor:CKEditorControl ID="cus_businessReq" runat="server" Width="100%" Height="300px" ValidationGroup="1-"></CKEditor:CKEditorControl>--%>
+                                    <div class="validation-content" style="position: relative;" id="cus_businessReq">
                                     </div>
                                 </div>
                             </div>
                             
+                            <br />
+                            <br />
+                            <br />
 
                             <div class="row mb-1">
                                 <div class="col-md-4">Tags&nbsp;</div>
@@ -334,7 +362,7 @@
                             <%End if %>
 
 
-                            <%If lvlvalid.Value = "True" And wfb_bar.wlevelAPget().ToString.Trim = "5" And wfb_bar.wlevelAPget().ToString.Trim = "6" Then %>
+                            <%If lvlvalid.Value = "True" And (wfb_bar.wlevelAPget().ToString.Trim = "5" Or wfb_bar.wlevelAPget().ToString.Trim = "6") Then %>
                             <asp:UpdatePanel runat="server">
                                 <ContentTemplate>
                                     <div class="row mb-1">
@@ -389,16 +417,19 @@
                             <div class="row mb-2" id="commentSubmitDiv">
                                 <div class=" col-sm-3">
                                     <asp:PlaceHolder ID="commentSubmit" runat="server"></asp:PlaceHolder>
+
                                 </div>
                             </div>
                             
+                            <br />
+                            <br />
 
                             <div id="accordion" class="mb-2">
                                 <div class="card">
 
                                     <div class="card-header p-1" id="headingOne">
                                         <h5 class="mb-0">
-                                            <a class="btn btn-link" data-toggle="collapse" data-target="#Comments" aria-expanded="false" aria-controls="Comments" href="#">
+                                            <a class="collapsed btn btn-link" data-toggle="collapse" data-target="#Comments" aria-expanded="false" aria-controls="Comments" href="#">
                                                 <table width="100%">
                                                     <tr>
                                                         <td width="10px"><span class="ui-icon ui-icon-plusthick"></span></td>
@@ -408,7 +439,7 @@
                                             </a>
                                         </h5>
                                     </div>
-                                    <div id="Comments" class="p-2 table-responsive" aria-labelledby="headingOne" data-parent="#accordion">
+                                    <div id="Comments" class="collapse p-2 table-responsive" aria-labelledby="headingOne" data-parent="#accordion">
                                         <table id="table_comments" class="table table-striped  form-body-fonts">
 
                                             <thead>
@@ -430,7 +461,7 @@
                                                             </td>
                                                             <td>
                                                                 <span class="fa fa-comment-o" style="color:darkblue"></span>
-                                                                <asp:Label ID="rep_comment" runat="server" Text=' <%#Eval("comment") %>' />
+                                                                <asp:Label ID="rep_comment2" runat="server" Text=' <%#Eval("comment") %>' />
                                                             </td>
                                                             <td>
                                                                 <span class="fa fa-check" style="color:forestgreen"></span>
@@ -465,7 +496,7 @@
 
                                     <div class="card-header p-1" id="headingTwo">
                                         <h5 class="mb-0">
-                                            <a class=" collapsed btn btn-link" data-toggle="collapse" data-target="#workflowlog" aria-expanded="false" aria-controls="workflowlog" href="#">
+                                            <a class="collapsed btn btn-link" data-toggle="collapse" data-target="#workflowlog" aria-expanded="false" aria-controls="workflowlog" href="#">
                                                 <table width="100%">
                                                     <tr>
                                                         <td width="10px"><span class="ui-icon ui-icon-plusthick"></span></td>
@@ -476,7 +507,7 @@
                                         </h5>
                                     </div>
                                     <div id="workflowlog" class="collapse table-responsive p-2" aria-labelledby="headingTwo" data-parent="#accordion2">
-                                        <table id="table_audit" class="table table-striped w-100 form-body-fonts">
+                                        <table id="table_audit" class="table table-striped form-body-fonts">
 
                                             <thead>
                                                 <tr>
@@ -498,7 +529,7 @@
                                                                 <asp:Label ID="rep_uid" runat="server" Text=' <%#Eval("wfa_code") %>' />
                                                             </td>
                                                             <td>
-                                                                <asp:Label ID="rep_comment" runat="server" Text=' <%#Eval("usr_name") %>' />
+                                                                <asp:Label ID="rep_comment1" runat="server" Text=' <%#Eval("usr_name") %>' />
                                                             </td>
                                                             <td>
                                                                 <asp:Label ID="rep_wf_level" runat="server" Text=' <%#Eval("wfa_createon") %>' />
@@ -544,20 +575,21 @@
                         
 
                         <table width="100%">
+                            
                             <tr>
                                 <td>
                                     <asp:Button ID="SubmitButton" Text="Save Record" runat="server" OnClick="savepage" Style="width: 100%" />
                                     <br />
                                 </td>
                             </tr>
+                           
                             <tr>
                                 <td>
                                     <asp:Button ID="BackButton" Text="Back to Previous" runat="server" OnClick="backpagepage" Style="width: 100%" CausesValidation="false" OnClientClick="jQuery('#frmform').validationEngine('detach');" />
                                 </td>
                             </tr>
-
-
                         </table>
+
                         <br />
                         <br />
                         <asp:Label ID="lblMessage" runat="server"></asp:Label>
@@ -568,6 +600,7 @@
 
                 <br />
                 <br />
+
                 <input type="hidden" runat="server" id="uid" name="uid" />
                 <input type="hidden" runat="server" id="rid" name="rid" />
                 <input type="hidden" runat="server" id="bid" name="bid" />
@@ -578,6 +611,8 @@
                 <input type="hidden" runat="server" id="cus_category_hidden" name="cus_category_hidden" />
                 <input type="hidden" runat="server" id="cus_module_hidden" name="cus_module_hidden" />
 
+                <input type="hidden" runat="server" id="cus_technicalReq_content" name="cus_technicalReq_content" />
+                <input type="hidden" runat="server" id="cus_businessReq_content" name="cus_businessReq_content" />
 
             </div>
 
@@ -649,7 +684,7 @@
                     $("#cus_module").append($('<option>', {
                         value: "",
                         text: "Please Select",
-                        selected: true 
+                        selected: true
                     }));
 
                     $.each(categories, function (index, category) {
@@ -713,34 +748,231 @@
 
         });
 
-        //$(document).on('click', '#genreportbtn', function (event) {
-        //    event.preventDefault();
+        $(document).ready(function () {
+            $('#<%= SubmitButton.ClientID %>').click(function () {
+                // Store selected values in hidden fields
+                var selectedCategory = $('#<%= cus_category.ClientID %>').val();
+                var selectedModule = $('#<%= cus_module.ClientID %>').val();
 
-        //    $.ajax({
-        //        type: "POST",
-        //        url: "crC.aspx/LoadModules1",
-        //        data: JSON.stringify({ categoryId: selectedValue }),
-        //        contentType: "application/json; charset=utf-8",
-        //        dataType: "json",
-        //        success: function (response) {
-
-        //            var module1 = response.d;
-
-        //            $("#cus_module").empty();
-
-        //            $.each(module1, function (index, module2) {
-        //                $("#cus_module").append($('<option>', {
-        //                    value: module2.Value,
-        //                    text: module2.Text,
-
-        //                }));
-        //            });
-        //        }
-        //    });
-
-        //});
+                $('#<%= cus_category_hidden.ClientID %>').val(selectedCategory);
+                $('#<%= cus_module_hidden.ClientID %>').val(selectedModule);
+            });
+        });
 
     </script>
+
+    <script type="text/javascript">
+
+        // Register the module with Quill
+        //Quill.register('modules/imageResize', ImageResize);
+
+        const quillT = new Quill('#cus_technicalReq', {
+            modules: {
+                toolbar: [
+                    [{ header: [1, 2, false] }],
+                    ['bold', 'italic', 'underline'],
+                    ['image', 'code-block'],
+                ],
+                //imageResize: {}, // Enable image resizing
+            },
+            theme: 'snow', // or 'bubble'
+        });
+
+        // Event handler for the custom image upload
+        quillT.getModule("toolbar").addHandler("image", function () {
+            var inputT = document.createElement("input");
+            inputT.type = "file";
+            inputT.accept = "image/*";
+
+            inputT.addEventListener("change", function () {
+                if (inputT.files && inputT.files[0]) {
+                    var fileT = inputT.files[0]; // Get the selected file
+
+                    if (fileT) {
+                        fileToBase64T(fileT, function (base64DataT) {
+                            insertImageAndMoveCursorT(base64DataT); // Insert image into Quill
+                        });
+                    }
+                }
+            });
+
+            inputT.click(); // Trigger the file picker
+
+        });
+
+        var quillContentT = document.getElementById("cus_technicalReq_content").value;
+
+        if (quillContentT) {
+            try {
+                //var deltaContent = JSON.parse(quillContent); // If content is in Delta (JSON) format
+                //quill.setContents(deltaContent); // Set the content in Quill
+                insertImageAndMoveCursorT(quillContentT);
+            } catch (e) {
+                console.error('Error parsing Delta content:', e);
+                // If not Delta (JSON), consider it as HTML
+                quillT.root.innerHTML = quillContentT; // Set content as HTML
+            }
+        }
+
+        function insertImageAndMoveCursorT(base64DataT) {
+            const rangeT = quillT.getSelection() || { indexT: quillT.getLength() }; // Get the current selection or end of content
+            const indexT = (rangeT && rangeT.indexT) ? rangeT.indexT : quillT.getLength(); // Determine where to insert
+
+            // Insert the image into Quill
+            quillT.insertEmbed(indexT, 'image', base64DataT);
+
+            // Move the cursor just after the inserted image
+            //quillT.setSelection(indexT + 1); // Set the cursor to the position just after the image
+        }
+
+        function fileToBase64T(fileT, callbackT) {
+            var readerT = new FileReader();
+
+            // Event handler when reading is completed
+            readerT.onload = function (e) {
+                var base64DataT = e.target.result; // Base64-encoded string
+                callbackT(base64DataT); // Call the callback function with the Base64 data
+            };
+
+            // Read the file as a data URL (Base64 format)
+            readerT.readAsDataURL(fileT);
+        }
+
+        // Function to save Quill content to a hidden field
+        function saveQuillContentT() {
+            var quillContentDeltaT = quillT.getContents(); // Get the entire content as Delta
+            var quillContentJsonT = JSON.stringify(quillContentDeltaT); // Convert to JSON
+            document.getElementById("cus_technicalReq_content").value = quillContentJsonT; // Store in hidden field
+        }
+
+        // Example: Save Quill content when a button is clicked
+        document.getElementById("SubmitButton").addEventListener("click", function () {
+            saveQuillContentT(); // Call the function to save the content
+        });
+
+        document.addEventListener("DOMContentLoaded", function () {
+            var quillContentT = document.getElementById("cus_technicalReq_content").value; // Get content from the hidden field
+
+            if (quillContentT) {
+                try {
+                    var quillContentDeltaT = JSON.parse(quillContentT); // Parse the JSON into Delta
+                    quillT.setContents(quillContentDeltaT); // Set the content in Quill
+                } catch (e) {
+                    console.error("Error parsing Quill content:", e);
+                }
+            }
+        });
+
+        
+    </script>
+
+    <script type="text/javascript">
+
+        // Register the module with Quill
+        //Quill.register('modules/imageResize', ImageResize);
+
+        const quillB = new Quill('#cus_businessReq', {
+            modules: {
+                toolbar: [
+                    [{ header: [1, 2, false] }],
+                    ['bold', 'italic', 'underline'],
+                    ['image', 'code-block'],
+                ],
+                //imageResize: {}, // Enable image resizing
+            },
+            theme: 'snow', // or 'bubble'
+        });
+
+        // Event handler for the custom image upload
+        quillB.getModule("toolbar").addHandler("image", function () {
+            var inputB = document.createElement("input");
+            inputB.type = "file";
+            inputB.accept = "image/*";
+
+            inputB.addEventListener("change", function () {
+                if (inputB.files && inputB.files[0]) {
+                    var fileB = inputB.files[0]; // Get the selected file
+
+                    if (fileB) {
+                        fileToBase64B(fileB, function (base64DataB) {
+                            insertImageAndMoveCursorB(base64DataB); // Insert image into Quill
+                        });
+                    }
+                }
+            });
+
+            inputB.click(); // Trigger the file picker
+
+        });
+
+        var quillContentB = document.getElementById("cus_businessReq_content").value;
+
+        if (quillContentB) {
+            try {
+                //var deltaContent = JSON.parse(quillContent); // If content is in Delta (JSON) format
+                //quill.setContents(deltaContent); // Set the content in Quill
+                insertImageAndMoveCursorB(quillContentB);
+            } catch (e) {
+                console.error('Error parsing Delta content:', e);
+                // If not Delta (JSON), consider it as HTML
+                quillB.root.innerHTML = quillContentB; // Set content as HTML
+            }
+        }
+
+        function insertImageAndMoveCursorB(base64DataB) {
+            const rangeB = quillB.getSelection() || { indexB: quillB.getLength() }; // Get the current selection or end of content
+            const indexB = (rangeB && rangeB.indexB) ? rangeB.indexB : quillB.getLength(); // Determine where to insert
+
+            // Insert the image into Quill
+            quillB.insertEmbed(indexB, 'image', base64DataB);
+
+            // Move the cursor just after the inserted image
+            //quillB.setSelection(indexB + 1); // Set the cursor to the position just after the image
+        }
+
+        function fileToBase64B(fileB, callbackB) {
+            var readerB = new FileReader();
+
+            // Event handler when reading is completed
+            readerB.onload = function (e) {
+                var base64DataB = e.target.result; // Base64-encoded string
+                callbackB(base64DataB); // Call the callback function with the Base64 data
+            };
+
+            // Read the file as a data URL (Base64 format)
+            readerB.readAsDataURL(fileB);
+        }
+
+        // Function to save Quill content to a hidden field
+        function saveQuillContentB() {
+            var quillContentDeltaB = quillB.getContents(); // Get the entire content as Delta
+            var quillContentJsonB = JSON.stringify(quillContentDeltaB); // Convert to JSON
+            document.getElementById("cus_businessReq_content").value = quillContentJsonB; // Store in hidden field
+        }
+
+        // Example: Save Quill content when a button is clicked
+        document.getElementById("SubmitButton").addEventListener("click", function () {
+            saveQuillContentB(); // Call the function to save the content
+        });
+
+        document.addEventListener("DOMContentLoaded", function () {
+            var quillContentB = document.getElementById("cus_businessReq_content").value; // Get content from the hidden field
+
+            if (quillContentB) {
+                try {
+                    var quillContentDeltaB = JSON.parse(quillContentB); // Parse the JSON into Delta
+                    quillB.setContents(quillContentDeltaB); // Set the content in Quill
+                } catch (e) {
+                    console.error("Error parsing Quill content:", e);
+                }
+            }
+        });
+
+    </script>
+
+
+
+
 </body>
 </html>
 

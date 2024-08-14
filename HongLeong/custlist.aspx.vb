@@ -32,7 +32,7 @@ Partial Public Class custlist_class
         ViewRights = "SE0004" '"SM0004"
         FullRights = "SE0005"
         NmSpace = "salescustmaintenance"
-        pFieldNames = " * " 'dontknow
+        pFieldNames = " * "
         pJoinFields = ""
         btnback.Visible = False
         Call InitLoad()

@@ -103,6 +103,18 @@ Partial Public Class crS_class
 
             cus_module.Items.Insert(0, New ListItem("Please Select", ""))
 
+        Else
+            ' Check for saved values in hidden fields and repopulate dropdowns
+            If Not String.IsNullOrEmpty(cus_category_hidden.Value) Then
+                LoadCategories(cus_department.SelectedValue)
+                cus_category.SelectedValue = cus_category_hidden.Value
+            End If
+
+            If Not String.IsNullOrEmpty(cus_module_hidden.Value) Then
+                LoadModules(cus_category.SelectedValue)
+                cus_module.SelectedValue = cus_module_hidden.Value
+            End If
+
 
         End If
         createdt.Value = DateTime.Now
@@ -110,7 +122,7 @@ Partial Public Class crS_class
         cus_refno.ReadOnly = True 'notsure
 
         Call InitLoad()
-        Call enabledisablesubmitbutton()
+        Call enabledisableAttr()
 
         wfb_bar.parentobj = mp
 
@@ -134,9 +146,14 @@ Partial Public Class crS_class
 
     End Sub
 
-    Private Sub enabledisablesubmitbutton()
+    Public Sub enabledisableAttr()
         If wfb_bar.wlevelAPget().ToString.Trim = "7" And cus_testingstatus.SelectedValue <> "Closed" Then
             ScriptManager.RegisterStartupScript(Me, Me.GetType(), "HideDiv", "$('#commentSubmitDiv').hide();", True)
+        End If
+
+        If wfb_bar.wlevelAPget().ToString.Trim = "6" Then
+            cus_devduedate.Enabled = False
+            cus_devname.Enabled = False
         End If
     End Sub
 
@@ -152,7 +169,7 @@ Partial Public Class crS_class
 
         If cus_devduedate.Enabled = True And wfb_bar.wlevelAPget().ToString.Trim = "5" Then
             If cus_devduedate.DateValue < DateTime.Today Then
-                lblMessage.Text = WebLib.getAlertMessageStyle("Please Enter Valid Development Due Date")
+                lblMessage.Text = WebLib.getAlertMessageStyle("Please Enter a Valid Future Date for the Development Due Date")
                 Return False
             End If
         End If
@@ -181,8 +198,13 @@ Partial Public Class crS_class
         If cus_devmandays.Enabled = True Then
             If cus_devmandays.Text <> "" Then
 
-                If Regex.IsMatch(cus_devmandays.Text, "^(?:0|[1-9]\d*)(?:\.[05]0?)?$") = False Then
-                    lblMessage.Text = WebLib.getAlertMessageStyle("Development man-days: Either an integer or a decimal of 0.5 is allowed")
+                'If Regex.IsMatch(cus_devmandays.Text, "^(?:0|[1-9]\d*)(?:\.(?:00|25|50|75))?$") = False Or cus_devmandays.Text = "0" Then
+                '    lblMessage.Text = WebLib.getAlertMessageStyle("Development man-days: Either an integer greater than 0 or a decimal of 0.5 is allowed")
+                '    Return False
+                'End If
+
+                If Not IsValidTestingMandays(cus_devmandays.Text) Then
+                    lblMessage.Text = WebLib.getAlertMessageStyle("Development man-days: Either an integer greater than 0 or a multiple of 0.25 (0.25, 0.50, 0.75) is allowed")
                     Return False
                 End If
 
@@ -192,8 +214,13 @@ Partial Public Class crS_class
         If cus_testingmandays.Enabled = True Then
             If cus_testingmandays.Text <> "" Then
 
-                If Regex.IsMatch(cus_testingmandays.Text, "^(?:0|[1-9]\d*)(?:\.[05]0?)?$") = False Then
-                    lblMessage.Text = WebLib.getAlertMessageStyle("Internal testing man-days: Either an integer or a decimal of 0.5 is allowed")
+                'If Regex.IsMatch(cus_testingmandays.Text, "^(?:0|[1-9]\d*)(?:\.(?:00|25|50|75))?$") = False Or cus_testingmandays.Text = "0" Then
+                '    lblMessage.Text = WebLib.getAlertMessageStyle("Internal testing man-days: Either an integer greater than 0 or a decimal of 0.5 is allowed")
+                '    Return False
+                'End If
+
+                If Not IsValidTestingMandays(cus_testingmandays.Text) Then
+                    lblMessage.Text = WebLib.getAlertMessageStyle("Internal testing man-days: Either an integer greater than 0 or a multiple of 0.25 (0.25, 0.50, 0.75) is allowed")
                     Return False
                 End If
 
@@ -201,6 +228,11 @@ Partial Public Class crS_class
         End If
 
         Return True
+    End Function
+
+    Public Function IsValidTestingMandays(value As Double) As Boolean
+        ' Check if the value is divisible by 0.25
+        Return (value >= 0 AndAlso value Mod 0.25 = 0)
     End Function
 
     Public Sub SetFieldRights()
@@ -295,8 +327,10 @@ Partial Public Class crS_class
                 Catch ex As Exception
                 End Try
 
-                cus_technicalReq.Text = dr("cus_technicalReq") & ""
-                cus_businessReq.Text = dr("cus_businessReq") & ""
+                'cus_technicalReq.Text = dr("cus_technicalReq") & ""
+                cus_technicalReq_content.Value = dr("cus_technicalReq") & ""
+
+                cus_businessReq_content.Value = dr("cus_businessReq") & ""
                 'cus_tags.Text = dr("cus_tags") & ""
 
                 Dim cus_tagsstr As String = dr("cus_tags") & ""
@@ -448,9 +482,9 @@ Partial Public Class crS_class
                 insertfields = insertfields & ",cus_testingmandays"
                 insertvalues = insertvalues & "," & cus_testingmandays.Text.Replace("'", "''") & ""
                 insertfields = insertfields & ",cus_technicalReq"
-                insertvalues = insertvalues & ",'" & cus_technicalReq.Text.Replace("'", "''") & "'"
+                insertvalues = insertvalues & ",'" & cus_technicalReq_content.Value.Replace("'", "''") & "'"
                 insertfields = insertfields & ",cus_businessReq"
-                insertvalues = insertvalues & ",'" & cus_businessReq.Text.Replace("'", "''") & "'"
+                insertvalues = insertvalues & ",'" & cus_businessReq_content.Value.Replace("'", "''") & "'"
                 insertfields = insertfields & ",cus_tags"
                 insertvalues = insertvalues & ",'" & lcus_tags.Replace("'", "''") & "'"
 
@@ -523,12 +557,12 @@ Partial Public Class crS_class
                 If cus_testingmandays.Enabled = True Then
                     insertvalues = insertvalues & ",cus_testingmandays=" & cus_testingmandays.Text.Replace("'", "''") & ""
                 End If
-                If cus_technicalReq.Enabled = True Then
-                    insertvalues = insertvalues & ",cus_technicalReq='" & cus_technicalReq.Text.Replace("'", "''") & "'"
-                End If
-                If cus_businessReq.Enabled = True Then
-                    insertvalues = insertvalues & ",cus_businessReq='" & cus_businessReq.Text.Replace("'", "''") & "'"
-                End If
+                'If cus_technicalReq.Enabled = True Then
+                insertvalues = insertvalues & ",cus_technicalReq='" & cus_technicalReq_content.Value.Replace("'", "''") & "'"
+                'End If
+                'If cus_businessReq.Enabled = True Then
+                insertvalues = insertvalues & ",cus_businessReq='" & cus_businessReq_content.Value.Replace("'", "''") & "'"
+                'End If
                 If cus_tags.Enabled = True Then
                     insertvalues = insertvalues & ",cus_tags='" & lcus_tags.Replace("'", "''") & "'"
                 End If
@@ -571,6 +605,8 @@ Partial Public Class crS_class
 
             End If
 
+            cus_category_hidden.Value = String.Empty
+            cus_module_hidden.Value = String.Empty
 
         Catch Err As Exception
             lblMessage.Text = WebLib.getAlertMessageStyle(Err.Message)
