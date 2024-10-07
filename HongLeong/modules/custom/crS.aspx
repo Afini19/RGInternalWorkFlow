@@ -337,30 +337,31 @@
                             <% End if %>
 
 
-                            <%If lvlvalid.Value = "True" And wfb_bar.wlevelAPget().tostring.trim = "4" Then %>
+                            <%If lvlvalid.Value = "True" And wfb_bar.wlevelAPget().ToString.Trim = "101" Then %>
 
-                            <div class="row mb-1" id="chargeable">
-                                <div class="col-md-2">Chargeable&nbsp;<font class="cssrequired">*</font></div>
-                                <div class="col-md-5">
-                                    <asp:RadioButtonList runat="server" ID="cus_chargeable" RepeatDirection="Horizontal" AutoPostBack="false">
-                                        <asp:ListItem Value="Yes">Yes&nbsp;&nbsp;</asp:ListItem>
-                                        <asp:ListItem Value="No">No</asp:ListItem>
-                                    </asp:RadioButtonList>
+                                <div class="row mb-1" id="chargeable">
+                                    <div class="col-md-2">Chargeable&nbsp;<font class="cssrequired">*</font></div>
+                                    <div class="col-md-5">
+                                        <asp:RadioButtonList runat="server" ID="cus_chargeable" RepeatDirection="Horizontal" AutoPostBack="false">
+                                            <asp:ListItem Value="Yes">Yes&nbsp;&nbsp;</asp:ListItem>
+                                            <asp:ListItem Value="No">No</asp:ListItem>
+                                        </asp:RadioButtonList>
+                                    </div>
                                 </div>
-                            </div>
-
-
-                            <div class="row mb-2">
-                                <div class=" col-sm-3">
-                                    <asp:Button ID="genreportbtn" Text="Print CR" runat="server" Style="width: 100%; background-color: slategrey" OnClick="generatereport" Visible="true" />
-                                </div>
-                            </div>
 
 
                             <%End if %>
 
+                            <%If lvlvalid.Value = "True" And wfb_bar.wlevelAPget().ToString.Trim = "100" Or wfb_bar.wlevelAPget().ToString.Trim = "101" Then %>
+                                <div class="row mb-2">
+                                    <div class=" col-sm-3">
+                                        <asp:Button ID="genreportbtn" Text="Print CR" runat="server" Style="width: 100%; background-color: slategrey" OnClick="generatereport" Visible="true"/>
+                                    </div>
+                                </div>
+                            <%End if %>
 
-                            <%If lvlvalid.Value = "True" And (wfb_bar.wlevelAPget().ToString.Trim = "5" Or wfb_bar.wlevelAPget().ToString.Trim = "6") Then %>
+
+                            <%If (lvlvalid.Value = "True" And wfb_bar.wlevelAPget().ToString.Trim = "5") Or wfb_bar.wlevelAPget().ToString.Trim = "6" Or (lvlvalid.Value = "False" And wfb_bar.wlevelAPget().ToString.Trim = "7") Then %>
                             <asp:UpdatePanel runat="server">
                                 <ContentTemplate>
                                     <div class="row mb-1">
@@ -557,7 +558,116 @@
                             </tr>
                         </table>
 
-                        <%If wfb_bar.wlevelAPget().tostring.trim = "" Or wfb_bar.wlevelAPget().tostring.trim = "1" And WebLib.LoginUser = "OPS" Then %>
+                        <%If WebLib.isStaff = True Then
+
+#End ExternalSource
+
+#ExternalSource ("D:\RGInternalWorkflow\HongLeong\include\menu.aspx", 54)
+                                If WebLib.hasmodrights("salesqouta", "SALES", "SQ000") = True Or WebLib.hasmodrights("salestarget", "SALES", "SG000") = True Or
+                                 WebLib.hasmodrights("salesactcust", "SALES", "SA000") = True Or WebLib.hasmodrights("salescustlogin", "SALES", "SM000") = True Or
+                                 WebLib.hasmodrights("salespref", "SALES", "SP000") = True Or WebLib.hasmodrights("salesmaxqty", "SALES", "SX000") = True Or
+                                 WebLib.hasmodrights("sales", "SALES", "SA000") = True Or (WebLib.hasmodrights("npscore", "GENERAL", "NP000") = True) Or WebLib.hasmodrights("salescustmaintenance", "SALES", "SE000") = True Then
+
+#End ExternalSource
+
+#ExternalSource ("D:\RGInternalWorkflow\HongLeong\include\menu.aspx", 55)
+                                    __o = WebLib.ClientURL("custlist.aspx")
+
+#End ExternalSource
+
+#ExternalSource ("D:\RGInternalWorkflow\HongLeong\include\menu.aspx", 56)
+                                End If
+
+#End ExternalSource
+
+#ExternalSource ("D:\RGInternalWorkflow\HongLeong\include\menu.aspx", 57)
+                                If Weblib.hasmodrights("secpro", "GENERAL", "UP100") = True Or WebLib.hasmodrights("secuse", "GENERAL", "SU000") = True Or
+                                   Weblib.hasmodrights("mstrcountry", "GENERAL", "CO000") = True Or
+                                   Weblib.hasmodrights("territory", "GENERAL", "TE000") = True Or Weblib.hasmodrights("mstrstate", "GENERAL", "ST000") = True Or
+                                   Weblib.hasmodrights("mstrcustcomplaint", "GENERAL", "CL000") = True Or Weblib.hasmodrights("mstrmatrixlevel", "GENERAL", "MT000") = True Or
+                                   Weblib.hasmodrights("mstrholiday", "GENERAL", "HL000") = True Or Weblib.hasmodrights("mstrcategory", "GENERAL", "CT000") = True Or
+                                   Weblib.hasmodrights("webcms", "GENERAL", "ED000") = True Or Weblib.hasmodrights("sysset", "GENERAL", "SS000") = True Or
+                                   Weblib.hasmodrights("workflow", "WORKFLOW", "WF000") = True Then
+
+#End ExternalSource
+                                    r
+#ExternalSource ("D:\RGInternalWorkflow\HongLeong\include\menu.aspx", 58)
+                                    If Weblib.hasmodrights("secpro", "GENERAL", "UP100") = True Or WebLib.hasmodrights("secuse", "GENERAL", "SU000") = True Then
+
+#End ExternalSource
+
+#ExternalSource ("D:\RGInternalWorkflow\HongLeong\include\menu.aspx", 59)
+                                        If Weblib.hasmodrights("secpro", "GENERAL", "UP100") = True Then
+
+#End ExternalSource
+
+#ExternalSource ("D:\RGInternalWorkflow\HongLeong\include\menu.aspx", 60)
+                                            __o = weblib.clienturl("secprofilelist.aspx")
+                                            r
+#End ExternalSource
+
+#ExternalSource ("D:\RGInternalWorkflow\HongLeong\include\menu.aspx", 61)
+                                        End If
+
+#End ExternalSource
+
+#ExternalSource ("D:\RGInternalWorkflow\HongLeong\include\menu.aspx", 62)
+                                        If Weblib.hasmodrights("secuse", "GENERAL", "SU000") = True Then
+
+#End ExternalSource
+
+#ExternalSource ("D:\RGInternalWorkflow\HongLeong\include\menu.aspx", 63)
+                                            __o = WebLib.ClientURL("secuserinfolist.aspx")
+
+#End ExternalSource
+
+#ExternalSource ("D:\RGInternalWorkflow\HongLeong\include\menu.aspx", 64)
+                                        End If
+
+#End ExternalSource
+
+#ExternalSource ("D:\RGInternalWorkflow\HongLeong\include\menu.aspx", 65)
+                                    End If
+
+#End ExternalSource
+
+#ExternalSource ("D:\RGInternalWorkflow\HongLeong\include\menu.aspx", 66)
+                                    If Weblib.hasmodrights("mstrcountry", "GENERAL", "CO000") = True Or
+                 n                     Weblib.hasmodrights("territory", "GENERAL", "TE000") = True Or Weblib.hasmodrights("mstrstate", "GENERAL", "ST000") = True Or
+                       Weblib.hasmodrights("mstrcustcomplaint", "GENERAL", "CL000") = True Or Weblib.hasmodrights("mstrmatrixlevel", "GENERAL", "MT000") = True Or
+ n                     Weblib.hasmodrights("mstrholiday", "GENERAL", "HL000") = True Or Weblib.hasmodrights("mstrcategory", "GENERAL", "CT000") = True Then
+
+#End ExternalSource
+
+#ExternalSource ("D:\RGInternalWorkflow\HongLeong\include\menu.aspx", 67)
+                        If Weblib.hasmodrights("mstrcategory", "GENERAL", "CT000") = True Then
+
+#End ExternalSource
+
+#ExternalSource ("D:\RGInternalWorkflow\HongLeong\include\menu.aspx", 68)
+                                            __o = WebLib.ClientURL("deptlist.aspx")
+
+#End ExternalSource
+
+#ExternalSource ("D:\RGInternalWorkflow\HongLeong\include\menu.aspx", 69)
+                                            __o = WebLib.ClientURL("codemstrlist.aspx")
+
+#End ExternalSource
+
+#ExternalSource ("D:\RGInternalWorkflow\HongLeong\include\menu.aspx", 70)
+                                        End If
+
+#End ExternalSource
+
+#ExternalSource ("D:\RGInternalWorkflow\HongLeong\include\menu.aspx", 71)
+                                    End If
+
+#End ExternalSource
+
+#ExternalSource ("D:\RGInternalWorkflow\HongLeong\include\menu.aspx", 72)
+                                    If Weblib.hasmodrights("workflow", "WORKFLOW", "WF000") = True Then
+
+#End %>
                         <br />
                         <div class="row mb-1">
                             <div class="col-md-12">
@@ -572,12 +682,16 @@
 
 
                         <table width="100%">
+
+                            <%If lvlvalid.Value = "True" Or wfb_bar.wlevelAPget().ToString.Trim = ""%>
                             <tr>
                                 <td>
                                     <asp:Button ID="SubmitButton" Text="Save Record" runat="server" OnClick="savepage" Style="width: 100%" />
                                     <br />
                                 </td>
                             </tr>
+                            <%End if %>
+
                             <tr>
                                 <td>
                                     <asp:Button ID="BackButton" Text="Back to Previous" runat="server" OnClick="backpagepage" Style="width: 100%" CausesValidation="false" OnClientClick="jQuery('#frmform').validationEngine('detach');" />
@@ -736,7 +850,7 @@
 
             var selectedValue = $(this).val();
 
-            if (selectedValue !== 'Closed') {
+            if (selectedValue !== 'Done Testing') {
                 $('#commentSubmitDiv').css('display', 'none');
             } else {
                 $('#commentSubmitDiv').css('display', '');
@@ -800,9 +914,14 @@
 
         if (quillContentT) {
             try {
-                //var deltaContent = JSON.parse(quillContent); // If content is in Delta (JSON) format
-                //quill.setContents(deltaContent); // Set the content in Quill
-                insertImageAndMoveCursorT(quillContentT);
+                if (quillContentT.startsWith("data:image/")) {
+                    // If quillContentT is an image in Base64 format, insert it as an image
+                    insertImageAndMoveCursorT(quillContentT);
+                } else {
+                    // Otherwise, try to parse as JSON (Delta format) or fallback to HTML
+                    var deltaContentT = JSON.parse(quillContentT); // Parse the JSON into Delta format
+                    quillT.setContents(deltaContentT); // Set the content in Quill
+                }
             } catch (e) {
                 console.error('Error parsing Delta content:', e);
                 // If not Delta (JSON), consider it as HTML
@@ -905,9 +1024,14 @@
 
         if (quillContentB) {
             try {
-                //var deltaContent = JSON.parse(quillContent); // If content is in Delta (JSON) format
-                //quill.setContents(deltaContent); // Set the content in Quill
-                insertImageAndMoveCursorB(quillContentB);
+                if (quillContentB.startsWith("data:image/")) {
+                    // If quillContentT is an image in Base64 format, insert it as an image
+                    insertImageAndMoveCursorB(quillContentB);
+                } else {
+                    // Otherwise, try to parse as JSON (Delta format) or fallback to HTML
+                    var deltaContentB = JSON.parse(quillContentB); // Parse the JSON into Delta format
+                    quillB.setContents(deltaContentB); // Set the content in Quill
+                }
             } catch (e) {
                 console.error('Error parsing Delta content:', e);
                 // If not Delta (JSON), consider it as HTML

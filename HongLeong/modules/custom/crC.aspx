@@ -339,30 +339,30 @@
                             <% End if %>
 
 
-                            <%If lvlvalid.Value = "True" And wfb_bar.wlevelAPget().tostring.trim = "4" Then %>
+                            <%If lvlvalid.Value = "True" And wfb_bar.wlevelAPget().ToString.Trim = "101" Then %>
                             
-                                    <div class="row mb-1" id="chargeable">
-                                        <div class="col-md-2">Chargeable&nbsp;<font class="cssrequired">*</font></div>
-                                        <div class="col-md-5">
-                                            <asp:RadioButtonList runat="server" ID="cus_chargeable" RepeatDirection="Horizontal" AutoPostBack="false">
-                                                <asp:ListItem Value="Yes">Yes&nbsp;&nbsp;</asp:ListItem>
-                                                <asp:ListItem Value="No">No</asp:ListItem>
-                                            </asp:RadioButtonList>
-                                        </div>
+                                <div class="row mb-1" id="chargeable">
+                                    <div class="col-md-2">Chargeable&nbsp;<font class="cssrequired">*</font></div>
+                                    <div class="col-md-5">
+                                        <asp:RadioButtonList runat="server" ID="cus_chargeable" RepeatDirection="Horizontal" AutoPostBack="false">
+                                            <asp:ListItem Value="Yes">Yes&nbsp;&nbsp;</asp:ListItem>
+                                            <asp:ListItem Value="No">No</asp:ListItem>
+                                        </asp:RadioButtonList>
                                     </div>
-                                    
-                                
-                                    <div class="row mb-2">
-                                        <div class=" col-sm-3">
-                                            <asp:Button ID="genreportbtn" Text="Print CR" runat="server" Style="width: 100%; background-color: slategrey" OnClick="generatereport" Visible="true"/>
-                                        </div>
-                                    </div>
-                                   
+                                </div>
                                 
                             <%End if %>
 
+                            <%If lvlvalid.Value = "True" And wfb_bar.wlevelAPget().ToString.Trim = "100" Or wfb_bar.wlevelAPget().ToString.Trim = "101" Then %>
+                                <div class="row mb-2">
+                                    <div class=" col-sm-3">
+                                        <asp:Button ID="genreportbtn" Text="Print CR" runat="server" Style="width: 100%; background-color: slategrey" OnClick="generatereport" Visible="true"/>
+                                    </div>
+                                </div>
+                            <%End if %>
 
-                            <%If lvlvalid.Value = "True" And (wfb_bar.wlevelAPget().ToString.Trim = "5" Or wfb_bar.wlevelAPget().ToString.Trim = "6") Then %>
+
+                            <%If (lvlvalid.Value = "True" And wfb_bar.wlevelAPget().ToString.Trim = "5") Or wfb_bar.wlevelAPget().ToString.Trim = "6" Or (lvlvalid.Value = "False" And wfb_bar.wlevelAPget().ToString.Trim = "7") Then %>
                             <asp:UpdatePanel runat="server">
                                 <ContentTemplate>
                                     <div class="row mb-1">
@@ -576,12 +576,14 @@
 
                         <table width="100%">
                             
+                            <%If lvlvalid.Value = "True" Or wfb_bar.wlevelAPget().ToString.Trim = "" Then%>
                             <tr>
                                 <td>
                                     <asp:Button ID="SubmitButton" Text="Save Record" runat="server" OnClick="savepage" Style="width: 100%" />
                                     <br />
                                 </td>
                             </tr>
+                            <%End If %>
                            
                             <tr>
                                 <td>
@@ -740,7 +742,7 @@
 
             var selectedValue = $(this).val();
 
-            if (selectedValue !== 'Closed') {
+            if (selectedValue !== 'Done Testing') {
                 $('#commentSubmitDiv').css('display','none');  
             } else {  
                 $('#commentSubmitDiv').css('display', '');  
@@ -804,9 +806,14 @@
 
         if (quillContentT) {
             try {
-                //var deltaContent = JSON.parse(quillContent); // If content is in Delta (JSON) format
-                //quill.setContents(deltaContent); // Set the content in Quill
-                insertImageAndMoveCursorT(quillContentT);
+                if (quillContentT.startsWith("data:image/")) {
+                    // If quillContentT is an image in Base64 format, insert it as an image
+                    insertImageAndMoveCursorT(quillContentT);
+                } else {
+                    // Otherwise, try to parse as JSON (Delta format) or fallback to HTML
+                    var deltaContentT = JSON.parse(quillContentT); // Parse the JSON into Delta format
+                    quillT.setContents(deltaContentT); // Set the content in Quill
+                }
             } catch (e) {
                 console.error('Error parsing Delta content:', e);
                 // If not Delta (JSON), consider it as HTML
@@ -863,8 +870,8 @@
             }
         });
 
-        
-    </script>
+
+</script>
 
     <script type="text/javascript">
 
@@ -909,9 +916,14 @@
 
         if (quillContentB) {
             try {
-                //var deltaContent = JSON.parse(quillContent); // If content is in Delta (JSON) format
-                //quill.setContents(deltaContent); // Set the content in Quill
-                insertImageAndMoveCursorB(quillContentB);
+                if (quillContentB.startsWith("data:image/")) {
+                    // If quillContentT is an image in Base64 format, insert it as an image
+                    insertImageAndMoveCursorB(quillContentB);
+                } else {
+                    // Otherwise, try to parse as JSON (Delta format) or fallback to HTML
+                    var deltaContentB = JSON.parse(quillContentB); // Parse the JSON into Delta format
+                    quillB.setContents(deltaContentB); // Set the content in Quill
+                }
             } catch (e) {
                 console.error('Error parsing Delta content:', e);
                 // If not Delta (JSON), consider it as HTML

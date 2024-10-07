@@ -278,12 +278,18 @@ Partial Public Class UserControls_workflowbar2
         Dim comList As New ArrayList()
         Try
             ' table:  (t)     char(10)    ;;
+            'cmd.CommandText = "Select usr_name, IIF(comment like '%(t)%', SUBSTRING(REPLACE(comment, char(10), '<br>'), 0, CHARINDEX('(t)', REPLACE(comment, char(10), '<br>'))) + '<table><tr><td>' + REPLACE(REPLACE(REPLACE(REPLACE((SUBSTRING(comment, CHARINDEX('(t)', comment), len(comment)- len( SUBSTRING(comment, 0,CHARINDEX('(t)', comment))) - len(SUBSTRING(comment, CHARINDEX('(/t)', comment), len(comment))) +4)), char(10), '</td></tr><tr><td>'), ';;', '</td><td>'), '(/t)', '</td></tr></table></div>'), '(t)', '<div><table class=''none'' style=''border:solid''><tr><td>') + '</td></tr></table>' + iif(len(SUBSTRING(comment + '', CHARINDEX('(/t)', comment)+4 , len(comment))) <= 0 ,'', SUBSTRING(REPLACE(comment, char(10), '<br>'), CHARINDEX('(/t)', REPLACE(comment, char(10), '<br>')) + 4, len(comment))) , REPLACE(comment, char(10), '<br>')) as comment, createddate, wui_name, isnull( wui_no,c.wf_level) as wui_no from zcustom_comments C " &
+            '                    " inner join (select wf_level , max(createddate ) as MaxDate from zcustom_comments  where wf_refno  ='" & wucode.Value & "' group by wf_level) t on c.wf_level = t.wf_level and c.createddate = t.MaxDate " &
+            '                    " left join secuserinfo on cus_uid = usr_code " &
+            '                    " left join workflowitems on c.wf_level = wui_no and wui_wid = '" & wwid.Value & "'  " &
+            '                    " where wf_refno = '" & wucode.Value & "' and wf_notdraft = 1  " &
+            '                    " order by wui_no, c.createddate "
             cmd.CommandText = "Select usr_name, IIF(comment like '%(t)%', SUBSTRING(REPLACE(comment, char(10), '<br>'), 0, CHARINDEX('(t)', REPLACE(comment, char(10), '<br>'))) + '<table><tr><td>' + REPLACE(REPLACE(REPLACE(REPLACE((SUBSTRING(comment, CHARINDEX('(t)', comment), len(comment)- len( SUBSTRING(comment, 0,CHARINDEX('(t)', comment))) - len(SUBSTRING(comment, CHARINDEX('(/t)', comment), len(comment))) +4)), char(10), '</td></tr><tr><td>'), ';;', '</td><td>'), '(/t)', '</td></tr></table></div>'), '(t)', '<div><table class=''none'' style=''border:solid''><tr><td>') + '</td></tr></table>' + iif(len(SUBSTRING(comment + '', CHARINDEX('(/t)', comment)+4 , len(comment))) <= 0 ,'', SUBSTRING(REPLACE(comment, char(10), '<br>'), CHARINDEX('(/t)', REPLACE(comment, char(10), '<br>')) + 4, len(comment))) , REPLACE(comment, char(10), '<br>')) as comment, createddate, wui_name, isnull( wui_no,c.wf_level) as wui_no from zcustom_comments C " &
-                                " inner join (select wf_level , max(createddate ) as MaxDate from zcustom_comments  where wf_refno  ='" & wucode.Value & "' group by wf_level) t on c.wf_level = t.wf_level and c.createddate = t.MaxDate " &
+                                " inner join (select wf_level , createddate as MaxDate from zcustom_comments  where wf_refno  ='" & wucode.Value & "' group by wf_level, createddate) t on c.wf_level = t.wf_level and c.createddate = t.MaxDate " &
                                 " left join secuserinfo on cus_uid = usr_code " &
                                 " left join workflowitems on c.wf_level = wui_no and wui_wid = '" & wwid.Value & "'  " &
                                 " where wf_refno = '" & wucode.Value & "' and wf_notdraft = 1  " &
-                                " order by wui_no, c.createddate "
+                                " order by c.createddate "
             LogtheAudit(cmd.CommandText)
             cmd.Connection = cn
             ad.SelectCommand = cmd
@@ -2006,13 +2012,20 @@ Partial Public Class UserControls_workflowbar2
         litAudit.Text = ""
 
         Try
+            'cmd.CommandText = "Select wui_name,wfa_code,usr_name,wfa_createon " &
+            '                    " from workflowaudit a" &
+            '                    " inner join (select wfa_level, max(wfa_createon) as MaxDate from workflowaudit where wfa_ucode='" & wucode.Value & "' group by wfa_level) t on isnull(a.wfa_level,0)=isnull(t.wfa_level,0) and a.wfa_createon = t.MaxDate " &
+            '                    " left join secuserinfo on wfa_createby = usr_code " &
+            '                    " left join workflowitems on wui_no = a.wfa_level and wui_wid = '" & wwid.Value & "' " &
+            '                    " where wfa_ucode='" & wucode.Value & "' " &
+            '                    " order by a.wfa_level, wfa_createon asc "
             cmd.CommandText = "Select wui_name,wfa_code,usr_name,wfa_createon " &
                                 " from workflowaudit a" &
-                                " inner join (select wfa_level, max(wfa_createon) as MaxDate from workflowaudit where wfa_ucode='" & wucode.Value & "' group by wfa_level) t on isnull(a.wfa_level,0)=isnull(t.wfa_level,0) and a.wfa_createon = t.MaxDate " &
+                                " inner join (select wfa_level, wfa_createon as MaxDate from workflowaudit where wfa_ucode='" & wucode.Value & "' group by wfa_level, wfa_createon) t on isnull(a.wfa_level,0)=isnull(t.wfa_level,0) and a.wfa_createon = t.MaxDate " &
                                 " left join secuserinfo on wfa_createby = usr_code " &
                                 " left join workflowitems on wui_no = a.wfa_level and wui_wid = '" & wwid.Value & "' " &
                                 " where wfa_ucode='" & wucode.Value & "' " &
-                                " order by a.wfa_level, wfa_createon asc "
+                                " order by wfa_createon asc "
 
             LogtheAudit(cmd.CommandText)
 

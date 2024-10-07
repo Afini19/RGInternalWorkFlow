@@ -148,11 +148,11 @@ Partial Public Class crC_class
     End Sub
 
     Public Sub enabledisableAttr()
-        If wfb_bar.wlevelAPget().ToString.Trim = "7" And cus_testingstatus.SelectedValue <> "Closed" Then
+        If wfb_bar.wlevelAPget().ToString.Trim = "7" And cus_testingstatus.SelectedValue <> "Done Testing" Then
             ScriptManager.RegisterStartupScript(Me, Me.GetType(), "HideDiv", "$('#commentSubmitDiv').hide();", True)
         End If
 
-        If wfb_bar.wlevelAPget().ToString.Trim = "6" Then
+        If wfb_bar.wlevelAPget().ToString.Trim = "6" Or wfb_bar.wlevelAPget().ToString.Trim = "7" Then
             cus_devduedate.Enabled = False
             cus_devname.Enabled = False
         End If
@@ -233,7 +233,7 @@ Partial Public Class crC_class
 
     Public Function IsValidTestingMandays(value As Double) As Boolean
         ' Check if the value is divisible by 0.25
-        Return (value >= 0 AndAlso value Mod 0.25 = 0)
+        Return (value > 0 AndAlso value Mod 0.25 = 0)
     End Function
 
     Public Sub SetFieldRights()
@@ -406,7 +406,7 @@ Partial Public Class crC_class
             If cus_devduedate.DateValue = New DateTime(1991, 1, 1) Then
                 ldevduedate = "NULL"
             Else
-                ldevduedate = "'" & WebLib.FormatDateFullFormatDDMMYYYYtoYYYYMMDD(cus_devduedate.DateValue) & "'"
+                ldevduedate = "'" & WebLib.formatthedate(cus_devduedate.DateValue) & "'"
             End If
         End If
 

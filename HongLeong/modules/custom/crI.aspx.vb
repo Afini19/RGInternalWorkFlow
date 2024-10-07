@@ -148,11 +148,11 @@ Partial Public Class crI_class
     End Sub
 
     Public Sub enabledisableAttr()
-        If wfb_bar.wlevelAPget().ToString.Trim = "7" And cus_testingstatus.SelectedValue <> "Closed" Then
+        If wfb_bar.wlevelAPget().ToString.Trim = "5" And cus_testingstatus.SelectedValue <> "Done Testing" Then
             ScriptManager.RegisterStartupScript(Me, Me.GetType(), "HideDiv", "$('#commentSubmitDiv').hide();", True)
         End If
 
-        If wfb_bar.wlevelAPget().ToString.Trim = "6" Then
+        If wfb_bar.wlevelAPget().ToString.Trim = "4" Or wfb_bar.wlevelAPget().ToString.Trim = "5" Then
             cus_devduedate.Enabled = False
             cus_devname.Enabled = False
         End If
@@ -161,35 +161,28 @@ Partial Public Class crI_class
     Private Function ValidateForm()
         lblMessage.Text = ""
 
-        If cus_chargeable.Enabled = True And wfb_bar.wlevelAPget().ToString.Trim = "4" Then
-            If cus_chargeable.SelectedIndex < 0 Then
-                lblMessage.Text = WebLib.getAlertMessageStyle("Please Indicate CR is Chargeable or not")
-                Return False
-            End If
-        End If
-
-        If cus_devduedate.Enabled = True And wfb_bar.wlevelAPget().ToString.Trim = "5" Then
+        If cus_devduedate.Enabled = True And wfb_bar.wlevelAPget().ToString.Trim = "3" Then
             If cus_devduedate.DateValue < DateTime.Today Then
                 lblMessage.Text = WebLib.getAlertMessageStyle("Please Enter a Valid Future Date for the Development Due Date")
                 Return False
             End If
         End If
 
-        If cus_devname.Enabled = True And wfb_bar.wlevelAPget().ToString.Trim = "5" Then
+        If cus_devname.Enabled = True And wfb_bar.wlevelAPget().ToString.Trim = "3" Then
             If cus_devname.Text = "" Then
                 lblMessage.Text = WebLib.getAlertMessageStyle("Please Enter Developer Name")
                 Return False
             End If
         End If
 
-        If cus_testername.Enabled = True And wfb_bar.wlevelAPget().ToString.Trim = "7" Then
+        If cus_testername.Enabled = True And wfb_bar.wlevelAPget().ToString.Trim = "5" Then
             If cus_testername.Text = "" Then
                 lblMessage.Text = WebLib.getAlertMessageStyle("Please Enter Tester Name")
                 Return False
             End If
         End If
 
-        If cus_testingstatus.Enabled = True And wfb_bar.wlevelAPget().ToString.Trim = "7" Then
+        If cus_testingstatus.Enabled = True And wfb_bar.wlevelAPget().ToString.Trim = "5" Then
             If cus_testingstatus.Text = "" Then
                 lblMessage.Text = WebLib.getAlertMessageStyle("Please Enter Testing Status")
                 Return False
@@ -233,7 +226,7 @@ Partial Public Class crI_class
 
     Public Function IsValidTestingMandays(value As Double) As Boolean
         ' Check if the value is divisible by 0.25
-        Return (value >= 0 AndAlso value Mod 0.25 = 0)
+        Return (value > 0 AndAlso value Mod 0.25 = 0)
     End Function
 
     Public Sub SetFieldRights()
@@ -406,7 +399,7 @@ Partial Public Class crI_class
             If cus_devduedate.DateValue = New DateTime(1991, 1, 1) Then
                 ldevduedate = "NULL"
             Else
-                ldevduedate = "'" & WebLib.FormatDateFullFormatDDMMYYYYtoYYYYMMDD(cus_devduedate.DateValue) & "'"
+                ldevduedate = "'" & WebLib.formatthedate(cus_devduedate.DateValue) & "'"
             End If
         End If
 
@@ -567,14 +560,11 @@ Partial Public Class crI_class
                 If cus_tags.Enabled = True Then
                     insertvalues = insertvalues & ",cus_tags='" & lcus_tags.Replace("'", "''") & "'"
                 End If
-                If wfb_bar.wlevelAPget().ToString.Trim = "4" Then
-                    insertvalues = insertvalues & ",cus_chargeable='" & cus_chargeable.SelectedValue & "'"
-                End If
-                If wfb_bar.wlevelAPget().ToString.Trim = "5" Then
+                If wfb_bar.wlevelAPget().ToString.Trim = "3" Then
                     insertvalues = insertvalues & ",cus_devduedate=" & ldevduedate & ""
                     insertvalues = insertvalues & ",cus_devname='" & cus_devname.Text.Replace("'", "''") & "'"
                 End If
-                If wfb_bar.wlevelAPget().ToString.Trim = "7" Then
+                If wfb_bar.wlevelAPget().ToString.Trim = "5" Then
                     insertvalues = insertvalues & ",cus_testername='" & cus_testername.Text.Replace("'", "''") & "'"
                     insertvalues = insertvalues & ",cus_testingstatus='" & cus_testingstatus.Text.Replace("'", "''") & "'"
                 End If

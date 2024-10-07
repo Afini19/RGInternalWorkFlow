@@ -305,7 +305,7 @@
 
                             <% End if %>  
 
-                            <%If lvlvalid.Value = "True" And wfb_bar.wlevelAPget().tostring.trim = "5" Then %>
+                            <%If (lvlvalid.Value = "True" And wfb_bar.wlevelAPget().ToString.Trim = "2") Or wfb_bar.wlevelAPget().ToString.Trim = "3" Or (lvlvalid.Value = "False" And wfb_bar.wlevelAPget().ToString.Trim = "4") Then %>
                             <asp:UpdatePanel runat="server">
                                 <ContentTemplate>
                                     <div class="row mb-1">
@@ -331,7 +331,7 @@
                             <%End if %>
 
 
-                            <%If lvlvalid.Value = "True" And wfb_bar.wlevelAPget().tostring.trim = "7" Then %>
+                            <%If lvlvalid.Value = "True" And wfb_bar.wlevelAPget().ToString.Trim = "4" Then %>
                             
                             <div class="row mb-1">
                                 <div class="col-md-3">Tester name&nbsp;<font class="cssrequired">*</font></div>
@@ -518,12 +518,16 @@
                         
 
                         <table width="100%">
+
+                            <%If lvlvalid.Value = "True" Or wfb_bar.wlevelAPget().ToString.Trim = ""%>
                             <tr>
                                 <td>
                                     <asp:Button ID="SubmitButton" Text="Save Record" runat="server" OnClick="savepage" Style="width: 100%" />
                                     <br />
                                 </td>
                             </tr>
+                            <%End if %>
+
                             <tr>
                                 <td>
                                     <asp:Button ID="BackButton" Text="Back to Previous" runat="server" OnClick="backpagepage" Style="width: 100%" CausesValidation="false" OnClientClick="jQuery('#frmform').validationEngine('detach');" />
@@ -682,7 +686,7 @@
 
             var selectedValue = $(this).val();
 
-            if (selectedValue !== 'Closed') {
+            if (selectedValue !== 'Done Testing') {
                 $('#commentSubmitDiv').css('display','none');  
             } else {  
                 $('#commentSubmitDiv').css('display', '');  
@@ -746,9 +750,14 @@
 
         if (quillContentT) {
             try {
-                //var deltaContent = JSON.parse(quillContent); // If content is in Delta (JSON) format
-                //quill.setContents(deltaContent); // Set the content in Quill
-                insertImageAndMoveCursorT(quillContentT);
+                if (quillContentT.startsWith("data:image/")) {
+                    // If quillContentT is an image in Base64 format, insert it as an image
+                    insertImageAndMoveCursorT(quillContentT);
+                } else {
+                    // Otherwise, try to parse as JSON (Delta format) or fallback to HTML
+                    var deltaContentT = JSON.parse(quillContentT); // Parse the JSON into Delta format
+                    quillT.setContents(deltaContentT); // Set the content in Quill
+                }
             } catch (e) {
                 console.error('Error parsing Delta content:', e);
                 // If not Delta (JSON), consider it as HTML
@@ -851,9 +860,14 @@
 
         if (quillContentB) {
             try {
-                //var deltaContent = JSON.parse(quillContent); // If content is in Delta (JSON) format
-                //quill.setContents(deltaContent); // Set the content in Quill
-                insertImageAndMoveCursorB(quillContentB);
+                if (quillContentB.startsWith("data:image/")) {
+                    // If quillContentT is an image in Base64 format, insert it as an image
+                    insertImageAndMoveCursorB(quillContentB);
+                } else {
+                    // Otherwise, try to parse as JSON (Delta format) or fallback to HTML
+                    var deltaContentB = JSON.parse(quillContentB); // Parse the JSON into Delta format
+                    quillB.setContents(deltaContentB); // Set the content in Quill
+                }
             } catch (e) {
                 console.error('Error parsing Delta content:', e);
                 // If not Delta (JSON), consider it as HTML
